@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 let 
-	homePath = "/home/mori";
-	cozytile = "${homePath}/nixos-dotfiles/Cozytile/.config";
-
   configDir = "${config.home.homeDirectory}/dotfiles/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   # Standard .config/directory
@@ -36,7 +33,7 @@ in
 			st = "status";
 			lg = "log --graph --oneline --all";
 		};
-		
+
 		extraConfig = {
 			init.defaultBranch = "main";
 			pull.rebase = true;
@@ -66,82 +63,82 @@ in
 
 		initContent = ''
 			function yazi-launcher() {
-				local tmp = "$(mktemp -t "yazi-cwd-.XXXXXX")"
-				
-				# Launch yazi, tell it to write last dir to tmp
-				yazi "$@" --cwd-file = "$tmp"
+				local tmp="$(mktemp -t "yazi-cwd-.XXXXXX")"
 
-				# If tmp file exists & not empty, cd to the directory in it
-				if cwd = "$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-					cs -- "$cwd"
-				fi
+        # Launch yazi, tell it to write last dir to tmp
+        yazi "$@" --cwd-file="$tmp"
 
-				rm -f -- "$tmp"
-				zle reset-prompt
+        # If tmp file exists & not empty, cd to the directory in it
+        if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+          cs -- "$cwd"
+        fi
+
+        rm -f -- "$tmp"
+        zle reset-prompt
 			}
 
-			zle -N yazi-launcher
+      zle -N yazi-launcher
 			bindkey '^o' yazi-launcher
-		'';
+			'';
 	};
 
-  /*
-	xdg.configFile."qtile".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/qtile";
-	#xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/nvim";
-	xdg.configFile."rofi".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/rofi";
-	xdg.configFile."dunst".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/dunst";
-	xdg.configFile."cava".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/cava";
-	home.file."Wallpaper".source = ./Cozytile/Wallpaper;
-	home.file.".config/nvim".source = ./config/nvim;
-  */
+	/*
+	   xdg.configFile."qtile".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/qtile";
+#xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/nvim";
+xdg.configFile."rofi".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/rofi";
+xdg.configFile."dunst".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/dunst";
+xdg.configFile."cava".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/cava";
+home.file."Wallpaper".source = ./Cozytile/Wallpaper;
+home.file.".config/nvim".source = ./config/nvim;
 
-  xdn.configFile = builtins.mapAttrs (name: subpath: {
-      source = create_symlink "${configDir}/${subpath}";
-      recursive = true;
-  }) configs;
+	xdg.configFile = builtins.mapAttrs (name: subpath: {
+			source = create_symlink "${configDir}/${subpath}";
+			recursive = true;
+			}) configs;
+	 */
 
 	home.packages = with pkgs; [
-		playerctl
-		brightnessctl
-		libnotify
-		flameshot
-		networkmanagerapplet
-		arandr
-		udiskie
-		polkit_gnome
+    playerctl
+    brightnessctl
+    libnotify
+    flameshot
+    networkmanagerapplet
+    arandr
+    udiskie
+    polkit_gnome
 
-		# Cozytile
-		rofi
-		dunst
-		feh
-		picom
-		cava
-		pywal
-		pfetch
-		xfce.thunar
-		(python3.withPackages(ps: with ps; [
-				      psutil
-				      requests
-				      dbus-python
-		]))
+    # Cozytile
+    rofi
+    dunst
+    feh
+    picom
+    cava
+    pywal
+    pfetch
+    xfce.thunar
+    (python3.withPackages(ps: with ps; [
+              psutil
+              requests
+              dbus-python
+    ]))
 
-		# Yazi
-		ffmpegthumbnailer
-		unar
-		jq
-		poppler
-		fd
-		ripgrep
-		fzf
-		zoxide
+    # Yazi
+    ffmpegthumbnailer
+    unar
+    jq
+    poppler
+    fd
+    ripgrep
+    fzf
+    zoxide
 
-		neovim
-		ripgrep
-		nil
-		nixpkgs-fmt
-		nodejs
-		gcc
-	];
+    neovim
+    ripgrep
+    nil
+    nixpkgs-fmt
+    nodejs
+    gcc
+  ];
 
 	programs.yazi = {
 		enable = true;
