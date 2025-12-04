@@ -90,12 +90,12 @@ xdg.configFile."dunst".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}
 xdg.configFile."cava".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/cava";
 home.file."Wallpaper".source = ./Cozytile/Wallpaper;
 home.file.".config/nvim".source = ./config/nvim;
+	 */
 
 	xdg.configFile = builtins.mapAttrs (name: subpath: {
-			source = create_symlink "${configDir}/${subpath}";
-			recursive = true;
-			}) configs;
-	 */
+    source = create_symlink "${configDir}/${subpath}";
+    recursive = true;
+  }) configs;
 
 	home.packages = with pkgs; [
     playerctl
