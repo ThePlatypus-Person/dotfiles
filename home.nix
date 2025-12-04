@@ -3,6 +3,14 @@
 let 
 	homePath = "/home/mori";
 	cozytile = "${homePath}/nixos-dotfiles/Cozytile/.config";
+
+  configDir = "${config.home.homeDirectory}/dotfiles/config";
+  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
+  # Standard .config/directory
+  configs = {
+    kitty = "kitty";
+    nvim = "nvim";
+  };
 in
 {
 	home.username = "mori";
@@ -77,14 +85,21 @@ in
 		'';
 	};
 
+  /*
 	xdg.configFile."qtile".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/qtile";
 	#xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/nvim";
 	xdg.configFile."rofi".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/rofi";
 	xdg.configFile."dunst".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/dunst";
 	xdg.configFile."cava".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/cava";
 	home.file."Wallpaper".source = ./Cozytile/Wallpaper;
-
 	home.file.".config/nvim".source = ./config/nvim;
+  */
+
+  xdn.configFile = builtins.mapAttrs (name: subpath: {
+      source = create_symlink "${configDir}/${subpath}";
+      recursive = true;
+  }) configs;
+
 	home.packages = with pkgs; [
 		playerctl
 		brightnessctl
