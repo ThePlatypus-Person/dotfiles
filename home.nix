@@ -155,7 +155,7 @@ home.file.".config/nvim".source = ./config/nvim;
 	};
 
 	theme = {
-	    manager = {
+	    mgr = {
 		preview_hovered = { underline = true; };
 	    };
 	};
