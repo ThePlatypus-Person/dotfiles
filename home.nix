@@ -7,7 +7,9 @@ let
     configs = {
 	kitty = "kitty";
 	nvim = "nvim";
+	picom = "picom";
 	"starship.toml" = "starship.toml";
+	yazi = "yazi";
     };
 in
 {
@@ -133,7 +135,6 @@ home.file.".config/nvim".source = ./config/nvim;
 	fzf
 	zoxide
 
-	neovim
 	ripgrep
 	nil
 	nixpkgs-fmt
@@ -141,23 +142,14 @@ home.file.".config/nvim".source = ./config/nvim;
 	gcc
     ];
 
+    programs.neovim = {
+	enable = true;
+	defaultEditor = true;
+    };
+
     programs.yazi = {
 	enable = true;
 	enableZshIntegration = true;
 	enableBashIntegration = true;
-
-	settings = {
-	    manager = {
-		show_hidden = true;
-		sort_by = "modified";
-		sort_dir_first = "true";
-	    };
-	};
-
-	theme = {
-	    mgr = {
-		preview_hovered = { underline = true; };
-	    };
-	};
     };
 }
