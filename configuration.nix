@@ -20,12 +20,18 @@
 
 	# Graphics & Desktop
 	services.displayManager.ly.enable = true;
+	services.udisks2.enable = true;
 
 	services.xserver = {
 		enable = true;
 		autoRepeatDelay = 200;
 		autoRepeatInterval = 35;
-		windowManager.qtile.enable = true;
+		windowManager.qtile = {
+		    enable = true;
+		    extraPackages = python3Packages: with python3Packages; [
+			qtile-extras
+		    ];
+		};
 	};
 
 	services.picom = {

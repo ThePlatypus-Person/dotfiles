@@ -8,6 +8,8 @@ let
 	kitty = "kitty";
 	nvim = "nvim";
 	picom = "picom";
+	qtile = "qtile";
+	rofi = "rofi";
 	"starship.toml" = "starship.toml";
 	yazi = "yazi";
     };
@@ -73,7 +75,7 @@ in
 
 		# If tmp file exists & not empty, cd to the directory in it
 		if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		    cs -- "$cwd"
+		    cd -- "$cwd"
 		fi
 
 		rm -f -- "$tmp"
@@ -84,16 +86,6 @@ in
 	    bindkey '^o' yazi-launcher
 	'';
     };
-
-    /*
-       xdg.configFile."qtile".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/qtile";
-#xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/nvim";
-xdg.configFile."rofi".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/rofi";
-xdg.configFile."dunst".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/dunst";
-xdg.configFile."cava".source = config.lib.file.mkOutOfStoreSymlink "${cozytile}/cava";
-home.file."Wallpaper".source = ./Cozytile/Wallpaper;
-home.file.".config/nvim".source = ./config/nvim;
-     */
 
     xdg.configFile = builtins.mapAttrs (name: subpath: {
 	source = create_symlink "${configDir}/${subpath}";
@@ -109,14 +101,14 @@ home.file.".config/nvim".source = ./config/nvim;
 	arandr
 	udiskie
 	polkit_gnome
+	blueman
 
-	# Cozytile
 	rofi
 	dunst
 	feh
 	picom
 	cava
-	pywal
+	nitrogen
 	pfetch
 	xfce.thunar
 	(python3.withPackages(ps: with ps; [
@@ -135,6 +127,7 @@ home.file.".config/nvim".source = ./config/nvim;
 	fzf
 	zoxide
 
+	# Neovim
 	ripgrep
 	nil
 	nixpkgs-fmt
@@ -151,5 +144,14 @@ home.file.".config/nvim".source = ./config/nvim;
 	enable = true;
 	enableZshIntegration = true;
 	enableBashIntegration = true;
+    };
+
+    services.udiskie = {
+	enable = true;
+	settings = {
+	    program_options = {
+		file_manager = "${pkgs.xfce.thunar}/bin/thunar";
+	    };
+	};
     };
 }
