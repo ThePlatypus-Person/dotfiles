@@ -113,11 +113,7 @@ in
 	nitrogen
 	pfetch
 	xfce.thunar
-	(python3.withPackages(ps: with ps; [
-			      psutil
-			      requests
-			      dbus-python
-	]))
+
 	betterlockscreen
 	dconf
 	gtk-engine-murrine
@@ -131,6 +127,12 @@ in
 	ripgrep
 	fzf
 	zoxide
+	(python3.withPackages(p: with p; [
+			      psutil
+			      requests
+			      pandas
+			      dbus-python
+	]))
 
 	# Neovim
 	ripgrep
@@ -140,6 +142,7 @@ in
 	nixpkgs-fmt
 	nodejs
 	gcc
+	xsel
 
 	zathura
     ];

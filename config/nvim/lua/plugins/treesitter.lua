@@ -18,7 +18,6 @@ return {
 		"typescript",
 		"rust",
 		"java",
-		"python",
 		"markdown",
 		"query",
 	    },

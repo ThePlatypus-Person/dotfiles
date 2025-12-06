@@ -2,9 +2,12 @@
 import os, sys, re, subprocess, socket, colors
 from libqtile import bar, extension, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
+from libqtile.widget import base
 from libqtile.lazy import lazy
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
+import psutil
+import subprocess
 
 # Variables
 mod = "mod4"
@@ -218,6 +221,72 @@ widget_defaults = dict(
 def search() -> None:
     qtile.cmd_spawn("rofi -show drun"),
 
+# Wifi/Ethernet Widget
+class NetworkStatusComponent(base.InLoopPollText):
+    def __init__(self, **config):
+        self.update_interval = 5  # Update every 5 seconds
+        super().__init__(**config)
+
+    def poll(self):
+        psutil.net_if_addrs().items()
+        #return test
+        return "test"
+        wifi, ethernet = self.get_network_status()
+        return f"{wifi} | {ethernet}"
+
+    def get_network_status(self):
+        wifi_status = None
+        ethernet_status = None
+
+        # Iterate through network interfaces to find active ones
+        for interface, addrs in psutil.net_if_addrs().items():
+            for addr in addrs:
+                if addr.family == psutil.AF_INET:
+                    # If it's an Ethernet interface
+                    if interface.startswith("eth") or interface.startswith("enp"):
+                        ethernet_status = f"Ethernet: {interface} ({addr.address})"
+
+                    # If it's a Wi-Fi interface
+                    elif interface.startswith("wlan") or interface.startswith("wlp"):
+                        wifi_status = f"Wi-Fi: {interface} ({addr.address})"
+
+        # Default message if no connection is found
+        return wifi_status or "Wi-Fi: Not connected", ethernet_status or "Ethernet: Not connected"
+
+
+        '''
+        widget.Wlan(
+            interface="wlp3s0",  # Replace with your Wi-Fi interface name
+            ethernet_interface = "enp5s0",
+            format="  {essid}",  # Show Wi-Fi name and signal strength
+            disconnected="󰖪 ",
+            foreground = colors[6],
+            background = colors[10],
+            padding = 0,
+        ),
+
+        widget.TextBox(
+            text = '󰿟',
+            font = "JetBrainsMono Nerd Font Bold",
+            foreground = colors[0],
+            background = colors[10],
+            padding = 0,
+            fontsize = 57,
+        ),
+
+        widget.Net(
+            interface="enp5s0",  # Replace with your Ethernet interface name (or leave empty for default)
+            format="{interface}: {down}↓ {up}↑",  # Show download and upload speeds
+            foreground = colors[6],
+            background = colors[10],
+            decorations=[
+                PowerLineDecoration(fill="000000", angle=90),
+            ],
+        ),
+        '''
+
+
+
 # Widgets
 def init_widgets_list():
     widgets_list = [
@@ -405,26 +474,7 @@ def init_widgets_list():
             fontsize = 57,
         ),
 
-        widget.Wlan(
-            interface="wlan0",  # Replace with your Wi-Fi interface name
-            format="{essid} {percent:3.0f}%",  # Show Wi-Fi name and signal strength
-            foreground = colors[0],
-            background = colors[10],
-            decorations=[
-                PowerLineDecoration(fill="000000", angle=90),
-            ],
-        ),
-
-        widget.Net(
-            interface="eth0",  # Replace with your Ethernet interface name (or leave empty for default)
-            format="Ethernet: {down}↓ {up}↑",  # Show download and upload speeds
-            foreground = colors[0],
-            background = colors[10],
-            decorations=[
-                PowerLineDecoration(fill="000000", angle=90),
-            ],
-        ),
-
+        NetworkStatusComponent(),
         widget.Clock(
             background = colors[10],
             foreground = colors[6],
