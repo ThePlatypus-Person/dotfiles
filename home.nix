@@ -10,6 +10,7 @@ let
 	nvim = "nvim";
 	picom = "picom";
 	qtile = "qtile";
+	zathura = "zathura";
 	rofi = "rofi";
 	"starship.toml" = "starship.toml";
 	yazi = "yazi";
@@ -138,6 +139,8 @@ in
 	nixpkgs-fmt
 	nodejs
 	gcc
+
+	zathura
     ];
 
     programs.neovim = {
