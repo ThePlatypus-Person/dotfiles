@@ -118,6 +118,7 @@ in
 			      requests
 			      dbus-python
 	]))
+	betterlockscreen
 	dconf
 	gtk-engine-murrine
 

@@ -16,7 +16,8 @@
 	time.timeZone = "Asia/Jakarta";
 	# Hibernation
 	boot.resumeDevice = "/dev/disk/by-uuid/1bdc033c-a4e8-44f6-b4e4-b37af9739a91";
-
+	# Allow betterlockscreen to verify password
+	security.pam.services.i3lock.enable = true;
 
 	# Graphics & Desktop
 	services.displayManager.ly.enable = true;

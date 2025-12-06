@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+uptime=$(uptime -p | sed -e 's/up //g')
+dir="~/.config/rofi/"
+rofi_command="rofi -theme $dir/power.rasi"
+
+# Options
+hibernate="⏾"
+suspend="󰒲"
+shutdown="󰐥"
+reboot="󰜉"
+lock=""
+logout=""
+
+options="$lock\n$hibernate\n$reboot\n$suspend\n$shutdown"
+
+chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 0)"
+case $chosen in
+    $shutdown)
+        systemctl poweroff
+        ;;
+    $reboot)
+        systemctl reboot
+        ;;
+    $hibernate)
+        mpc -q pause
+        amixer set Master mute
+        systemctl hibernate
+        ;;
+    $lock)
+	betterlockscreen -l
+        ;;
+    $suspend)
+        mpc -q pause
+        amixer set Master mute
+        systemctl suspend
+        ;;
+    $logout)
+        if [[ "$DESKTOP_SESSION" == "Openbox" ]]; then
+            openbox --exit
+        elif [[ "$DESKTOP_SESSION" == "bspwm" ]]; then
+            bspc quit
+        elif [[ "$DESKTOP_SESSION" == "i3" ]]; then
+            i3-msg exit
+        fi
+        ;;
+esac
+
