@@ -5,6 +5,7 @@ let
     create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
     # Standard .config/directory
     configs = {
+	dunst = "dunst";
 	kitty = "kitty";
 	nvim = "nvim";
 	picom = "picom";
@@ -116,6 +117,8 @@ in
 			      requests
 			      dbus-python
 	]))
+	dconf
+	gtk-engine-murrine
 
 	# Yazi
 	ffmpegthumbnailer
@@ -129,6 +132,8 @@ in
 
 	# Neovim
 	ripgrep
+	cargo
+	rustc
 	nil
 	nixpkgs-fmt
 	nodejs
@@ -152,6 +157,49 @@ in
 	    program_options = {
 		file_manager = "${pkgs.xfce.thunar}/bin/thunar";
 	    };
+	};
+    };
+
+
+    home.pointerCursor = {
+	name = "Capitaine Cursors (Gruvbox) - White";
+	size = 32;
+	package = pkgs.capitaine-cursors-themed;
+	gtk.enable = true;
+	x11.enable = true;
+    };
+
+    xresources.properties = {
+	"Xft.dpi" = 110;
+	"Xft.autohint" = 0;
+	"Xft.lcdfilter" = "lcddefault";
+	"Xft.hintstyle" = "hintfull";
+	"Xft.hinting" = 1;
+	"Xft.antialias" = 1;
+	"Xft.rgba" = "rgb";
+    };
+
+    gtk = {
+	enable = true;
+	font = {
+	    name = "JetBrains";
+	    size = 11;
+	};
+	theme = {
+	    name = "Tokyonight-Dark";
+	    package = pkgs.tokyonight-gtk-theme;
+	};
+	iconTheme = {
+	    name = "Papirus-Dark";
+	    package = pkgs.papirus-icon-theme;
+	};
+	cursorTheme = {
+	    name = "Capitaine Cursors (Gruvbox) - White";
+	    size = 32;
+	    package = pkgs.capitaine-cursors-themed;
+	};
+	gtk3 = {
+	    extraConfig.gtk-application-prefer-dark-theme = true;
 	};
     };
 }
