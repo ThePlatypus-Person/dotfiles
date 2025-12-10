@@ -127,12 +127,6 @@ in
 	ripgrep
 	fzf
 	zoxide
-	(python3.withPackages(p: with p; [
-			      psutil
-			      requests
-			      pandas
-			      dbus-python
-	]))
 
 	# Neovim
 	ripgrep

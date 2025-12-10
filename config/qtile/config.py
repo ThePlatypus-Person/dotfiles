@@ -2,12 +2,14 @@
 import os, sys, re, subprocess, socket, colors
 from libqtile import bar, extension, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
+from libqtile.log_utils import logger
 from libqtile.widget import base
 from libqtile.lazy import lazy
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
 import psutil
 import subprocess
+import socket
 
 # Variables
 mod = "mod4"
@@ -221,6 +223,15 @@ widget_defaults = dict(
 def search() -> None:
     qtile.cmd_spawn("rofi -show drun"),
 
+
+def run(cmd):
+    """Run a shell command and return stripped output, or None."""
+    try:
+        return subprocess.check_output(cmd, shell=True).decode().strip() or None
+    except subprocess.CalledProcessError:
+        return None
+
+
 # Wifi/Ethernet Widget
 class NetworkStatusComponent(base.InLoopPollText):
     def __init__(self, **config):
@@ -228,30 +239,69 @@ class NetworkStatusComponent(base.InLoopPollText):
         super().__init__(**config)
 
     def poll(self):
-        psutil.net_if_addrs().items()
-        #return test
-        return "test"
-        wifi, ethernet = self.get_network_status()
-        return f"{wifi} | {ethernet}"
+        net = self.get_network_status()
+
+        if not net["interface"]:
+            return "󰈂"
+
+        if net["type"] == "wifi":
+            name = net["ssid"] or "WiFi?"
+            status = "󰄬" if net["online"] else ""
+            return f"  {name} {status}"
+        elif net["type"] == "ethernet":
+            status = "󰄬" if net["online"] else ""
+            return f"󰈁 Ethernet {status}"
+
+        return "󱚵"
+
+    def get_wifi_ssid(self):
+        """Return SSID if connected to WiFi, otherwise None."""
+        return run("iwgetid -r")  # works on all major Linux distros
+
+    def get_active_interface(self):
+        """
+        Returns the name of the currently active network interface
+        (one that has a default route).
+        """
+        route = run("ip route | grep default")
+        if not route:
+            return None
+        return route.split()[4]  # default dev <iface>
+
+    def interface_type(self, iface):
+        """Return 'wifi', 'ethernet', or 'unknown'."""
+        if not iface:
+            return None
+        # WiFi interfaces have a /sys/class/net/<iface>/wireless directory
+        wireless_path = f"/sys/class/net/{iface}/wireless"
+        try:
+            import os
+            return "wifi" if os.path.isdir(wireless_path) else "ethernet"
+        except Exception:
+            return "unknown"
+
+    def internet_ok(self, timeout=2):
+        """Check real internet connectivity."""
+        try:
+            socket.setdefaulttimeout(timeout)
+            socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect(("8.8.8.8", 53))
+            return True
+        except:
+            return False
 
     def get_network_status(self):
-        wifi_status = None
-        ethernet_status = None
+        iface = self.get_active_interface()
+        ntype = self.interface_type(iface)
 
-        # Iterate through network interfaces to find active ones
-        for interface, addrs in psutil.net_if_addrs().items():
-            for addr in addrs:
-                if addr.family == psutil.AF_INET:
-                    # If it's an Ethernet interface
-                    if interface.startswith("eth") or interface.startswith("enp"):
-                        ethernet_status = f"Ethernet: {interface} ({addr.address})"
+        ssid = self.get_wifi_ssid() if ntype == "wifi" else None
+        online = self.internet_ok()
 
-                    # If it's a Wi-Fi interface
-                    elif interface.startswith("wlan") or interface.startswith("wlp"):
-                        wifi_status = f"Wi-Fi: {interface} ({addr.address})"
-
-        # Default message if no connection is found
-        return wifi_status or "Wi-Fi: Not connected", ethernet_status or "Ethernet: Not connected"
+        return {
+            "interface": iface,
+            "type": ntype,          # wifi / ethernet / unknown
+            "ssid": ssid,           # only for wifi
+            "online": online        # internet working?
+        }
 
 
         '''
@@ -284,7 +334,6 @@ class NetworkStatusComponent(base.InLoopPollText):
             ],
         ),
         '''
-
 
 
 # Widgets
@@ -439,6 +488,25 @@ def init_widgets_list():
             fontsize = 57,
         ),
 
+        widget.DF(
+            update_interval=10,
+            partition="/",       # which partition to monitor
+            visible_on_warn=False,
+            warn_color="f7768e",
+            foreground = colors[6],
+            background = colors[10],
+            format=" {uf}{m}",  # used free / size
+        ),
+
+        widget.TextBox(
+            text = '󰿟',
+            font = "JetBrainsMono Nerd Font Bold",
+            foreground = colors[0],
+            background = colors[10],
+            padding = 0,
+            fontsize = 57,
+        ),
+
         widget.Memory(
             background = colors[10],
             foreground = colors[6],
@@ -474,7 +542,21 @@ def init_widgets_list():
             fontsize = 57,
         ),
 
-        NetworkStatusComponent(),
+        NetworkStatusComponent(
+            background = colors[10],
+            foreground = colors[6],
+            padding = 3, 
+        ),
+
+        widget.TextBox(
+            text = '󰿟',
+            font = "JetBrainsMono Nerd Font Bold",
+            foreground = colors[0],
+            background = colors[10],
+            padding = 0,
+            fontsize = 57,
+        ),
+
         widget.Clock(
             background = colors[10],
             foreground = colors[6],
@@ -497,6 +579,7 @@ def init_widgets_list():
             padding = 3, 
             format = "󰥔  %R ",
         ),
+
     ]
     return widgets_list
 
