@@ -95,6 +95,8 @@
 		# Audio Controls
 		pavucontrol
 		pamixer
+
+		file
 	];
 
 	fonts.packages = with pkgs; [

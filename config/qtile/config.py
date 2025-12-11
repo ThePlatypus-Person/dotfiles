@@ -15,7 +15,7 @@ import socket
 mod = "mod4"
 terminal = "kitty"
 launcher = "rofi -show drun -theme ~/.config/rofi/launcher.rasi"
-browser = "zen"
+browser = "librewolf"
 discord = "discord"
 music = "spotify"
 files = "thunar"

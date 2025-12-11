@@ -63,6 +63,7 @@ rules = [
 	{ name = "*/", use = [ "edit", "open", "reveal" ] },
 	# Text
 	{ mime = "text/*", use = [ "edit", "reveal" ] },
+	{ mime = "application/x-subrip", use = [ "edit", "reveal" ] },
 	# Image
 	{ mime = "image/*", use = [ "open", "reveal" ] },
 	# Media
@@ -95,6 +96,7 @@ spotters = [
 	{ name = "*/", run = "folder" },
 	# Code
 	{ mime = "text/*", run = "code" },
+	{ mime = "application/x-subrip", run = "code" },
 	{ mime = "application/{mbox,javascript,wine-extension-ini}", run = "code" },
 	# Image
 	{ mime = "image/{avif,hei?,jxl}", run = "magick" },
@@ -122,6 +124,7 @@ previewers = [
 	{ name = "*/", run = "folder" },
 	# Code
 	{ mime = "text/*", run = "code" },
+	{ mime = "application/x-subrip", run = "code" },
 	{ mime = "application/{mbox,javascript,wine-extension-ini}", run = "code" },
 	# JSON
 	{ mime = "application/{json,ndjson}", run = "json" },

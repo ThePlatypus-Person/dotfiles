@@ -161,6 +161,21 @@ in
 	};
     };
 
+    programs.librewolf = {
+	enable = true;
+	# Enable WebGL, cookies and history
+	settings = {
+	    "webgl.disabled" = true;
+	    "privacy.resistFingerprinting" = true;
+	    "privacy.clearOnShutdown.history" = true;
+	    "privacy.clearOnShutdown.cookies" = true;
+	    "network.cookie.lifetimePolicy" = 0;
+	    "network.trr.uri" = "https://dns10.quad9.net/dns-query";
+	    "browser.toolbars.bookmarks.visibility" = "newtab";
+	    "ui.systemUsesDarkMode" = 1;
+	};
+    };
+
 
     home.pointerCursor = {
 	name = "Capitaine Cursors (Gruvbox) - White";
@@ -203,4 +218,29 @@ in
 	    extraConfig.gtk-application-prefer-dark-theme = true;
 	};
     };
+
+
+    programs.mpv = {
+	enable = true;
+
+	package = (
+	    pkgs.mpv-unwrapped.wrapper {
+		scripts = with pkgs.mpvScripts; [
+		    uosc
+		    sponsorblock
+		];
+
+		mpv = pkgs.mpv-unwrapped.override {
+		    waylandSupport = true;
+		};
+	    }
+	);
+
+	config = {
+	    profile = "high-quality";
+	    ytdl-format="bv*[height<720]+ba/b";
+	    cache-default = 4000000;
+	};
+    };
+
 }
