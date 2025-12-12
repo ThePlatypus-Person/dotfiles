@@ -14,6 +14,7 @@ let
 	rofi = "rofi";
 	"starship.toml" = "starship.toml";
 	yazi = "yazi";
+	"BetterDiscord/themes" = "BetterDiscord/themes";
     };
 in
 {
@@ -139,7 +140,12 @@ in
 	xsel
 
 	zathura
+	slack
+	discord-ptb
+	keepassxc
+	zoom-us
     ];
+
 
     programs.neovim = {
 	enable = true;
@@ -173,6 +179,7 @@ in
 	    "network.trr.uri" = "https://dns10.quad9.net/dns-query";
 	    "browser.toolbars.bookmarks.visibility" = "newtab";
 	    "ui.systemUsesDarkMode" = 1;
+	    "dom.w3c_touch_events.enabled" = 1;
 	};
     };
 
@@ -242,5 +249,4 @@ in
 	    cache-default = 4000000;
 	};
     };
-
 }

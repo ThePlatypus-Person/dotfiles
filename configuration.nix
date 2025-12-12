@@ -84,20 +84,47 @@
 
 
 	# Packages
+	nixpkgs.config.allowUnfree = true;
 	programs.firefox.enable = true;
+	environment.sessionVariables = {
+	    MOZ_USE_XINPUT2 = "1";
+	};
+
 	programs.zsh.enable = true;
 	environment.systemPackages = with pkgs; [
 		vim
 		wget
 		kitty
 		git
+		chromium
 		
 		# Audio Controls
 		pavucontrol
 		pamixer
 
 		file
+		gvfs
+		unzip
 	];
+
+	programs.chromium = {
+	    enable = true;
+	    homepageLocation = "https://www.startpage.com/";
+	    extensions = [
+		"eimadpbcbfnmbkopoojfekhnkhdbieeh;https://clients2.google.com/service/update2/crx" # dark reader
+		    "aapbdbdomjkkjkaonfhkkikfgjllcleb;https://clients2.google.com/service/update2/crx" # google translate
+	    ];
+	    extraOpts = {
+		"WebAppInstallForceList" = [
+		    {
+			"custom_name" = "Youtube";
+			"create_desktop_shortcut" = false;
+			"default_launch_container" = "window";
+			"url" = "https://youtube.com";
+		    }
+		];
+	    };
+	};
 
 	fonts.packages = with pkgs; [
 		nerd-fonts.jetbrains-mono
