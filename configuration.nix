@@ -111,8 +111,7 @@
 	    enable = true;
 	    homepageLocation = "https://www.startpage.com/";
 	    extensions = [
-		"eimadpbcbfnmbkopoojfekhnkhdbieeh;https://clients2.google.com/service/update2/crx" # dark reader
-		    "aapbdbdomjkkjkaonfhkkikfgjllcleb;https://clients2.google.com/service/update2/crx" # google translate
+		"aapbdbdomjkkjkaonfhkkikfgjllcleb;https://clients2.google.com/service/update2/crx" # google translate
 	    ];
 	    extraOpts = {
 		"WebAppInstallForceList" = [

@@ -30,6 +30,9 @@ set default-fg "#c0caf5"
 set render-loading true
 set render-loading-fg "#1a1b26"
 set render-loading-bg "#c0caf5"
+set guioptions none
+
+set recolor true
 #
 # Recolor mode settings
 # <C-r> to switch modes

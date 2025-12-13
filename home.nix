@@ -114,6 +114,7 @@ in
 	nitrogen
 	pfetch
 	xfce.thunar
+	unclutter
 
 	betterlockscreen
 	dconf

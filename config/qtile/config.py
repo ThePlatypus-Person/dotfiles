@@ -2,14 +2,10 @@
 import os, sys, re, subprocess, socket, colors
 from libqtile import bar, extension, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
-from libqtile.log_utils import logger
+# from libqtile.log_utils import logger
 from libqtile.widget import base
 from libqtile.lazy import lazy
-from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
-import psutil
-import subprocess
-import socket
 
 # Variables
 mod = "mod4"
@@ -71,12 +67,17 @@ keys = [
     Key([mod], "Down", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "Up", lazy.layout.up(), desc="Move focus up"),
 
+    Key([mod, "shift"], "Left", lazy.layout.shuffle_left(), desc="Move window left"),
+    Key([mod, "shift"], "Right", lazy.layout.shuffle_right(), desc="Move window right"),
+    Key([mod, "shift"], "Down", lazy.layout.shuffle_up(), desc="Move window up"),
+    Key([mod, "shift"], "Up", lazy.layout.shuffle_down(), desc="Move window right"),
+
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
 
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_up(), desc="Move window to the left"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_down(), desc="Move window to the right"),
+    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window left"),
+    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window right"),
+    Key([mod, "shift"], "j", lazy.layout.shuffle_up(), desc="Move window up"),
+    Key([mod, "shift"], "k", lazy.layout.shuffle_down(), desc="Move window down"),
 
     Key([mod, "control"], "h", lazy.layout.grow(), desc="Grow window to the left"),
     Key([mod, "control"], "l", lazy.layout.shrink(), desc="Grow window to the right"),
@@ -201,13 +202,13 @@ layout_theme = {
 # Layouts
 layouts = [
     layout.Max(**layout_theme),
-    layout.MonadTall(**layout_theme),
-    layout.Tile(**layout_theme),
-    layout.Floating(**layout_theme),
+    #layout.MonadTall(**layout_theme),
+    #layout.Tile(**layout_theme),
+    #layout.Floating(**layout_theme),
     layout.Columns(**layout_theme),
-    layout.Bsp(**layout_theme),
-    layout.Plasma(**layout_theme),
-    layout.Stack(**layout_theme),
+    #layout.Bsp(**layout_theme),
+    #layout.Plasma(**layout_theme),
+    #layout.Stack(**layout_theme),
     layout.Zoomy(**layout_theme),
 ]
 
@@ -651,7 +652,7 @@ dgroups_app_rules = []
 follow_mouse_focus = True
 bring_front_click = False
 floats_kept_above = True
-cursor_warp = True
+cursor_warp = False
 floating_layout = layout.Floating(
     **layout_theme,
     float_rules=[
