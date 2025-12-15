@@ -15,6 +15,7 @@ let
 	"starship.toml" = "starship.toml";
 	yazi = "yazi";
 	"BetterDiscord/themes" = "BetterDiscord/themes";
+	tmux = "tmux";
     };
 in
 {
@@ -145,6 +146,11 @@ in
 	discord-ptb
 	keepassxc
 	zoom-us
+	typst
+	bruno
+	tmux
+
+	openjdk21
     ];
 
 

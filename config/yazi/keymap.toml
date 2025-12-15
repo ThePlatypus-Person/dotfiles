@@ -129,7 +129,7 @@ keymap = [
 	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Go ~/Downloads" },
 	{ on = [ "g", "w" ],       run = "cd ~/Personal/Writing",   desc = "Go ~/Personal/Writing" },
 	{ on = [ "g", "q" ],       run = "cd ~/Personal/Writings",   desc = "Go ~/Personal/Writings" },
-	{ on = [ "g", "t" ],       run = "cd ~/Work/Tupay",   desc = "Go ~/Work/Tupay" },
+	{ on = [ "g", "W" ],       run = "cd ~/Work/Tupay",   desc = "Go ~/Work/Tupay" },
 	{ on = [ "g", "s" ],       run = "cd ~/Learning/Philosophy",   desc = "Go ~/Learning/Philosophy" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Jump interactively" },
 	{ on = [ "g", "f" ],       run = "follow",           desc = "Follow hovered symlink" },
