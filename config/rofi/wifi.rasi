@@ -21,6 +21,8 @@ configuration {
 window {
   width: 11%;
   background-color: @bg;
+  x-offset: -250;
+  y-offset: 30;
 }
 
 element {

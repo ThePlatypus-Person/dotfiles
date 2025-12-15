@@ -2,6 +2,7 @@
         Configuration Section        
 \*---------------------------------*/
 configuration {
+    font:           		"JetBrains Mono Nerd Font 11";
     modi:                       "drun,run,filebrowser,window";
     show-icons:                 false;
     display-drun:               "";
@@ -15,15 +16,7 @@ configuration {
 /*---------------------------------*\
     Global Properties Section     
 \*---------------------------------*/
-* {
-    font:           "JetBrains Mono Nerd Font 11";
-    background:     #15161EFF;
-    background-alt: #1A1B26FF;
-    foreground:     #C0CAF5FF;
-    selected:       #33467CFF;
-    active:         #414868FF;
-    urgent:         #F7768EFF;
-}
+@import "colors.rasi"
 
 /*---------------------------------*\
        Main Window Section         

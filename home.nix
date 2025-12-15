@@ -16,6 +16,7 @@ let
 	yazi = "yazi";
 	"BetterDiscord/themes" = "BetterDiscord/themes";
 	tmux = "tmux";
+	bookmarks = "bookmarks";
     };
 in
 {
@@ -116,6 +117,7 @@ in
 	pfetch
 	xfce.thunar
 	unclutter
+	dmenu
 
 	betterlockscreen
 	dconf
@@ -151,6 +153,7 @@ in
 	tmux
 
 	openjdk21
+	jetbrains.idea-community
     ];
 
 

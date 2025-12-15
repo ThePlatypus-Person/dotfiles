@@ -5,25 +5,15 @@ configuration {
 /*---------------------------------*\
          Global Properties Section          
 \*---------------------------------*/
-* {
-    bg:     		#15161EFF;
-    bg-alt: 		#1A1B26FF;
-    bg-selected:       	#33467CFF;
-
-    fg:     #C0CAF5FF;
-    fg-alt: #a9b1d6;
-
-    active: 	#414868FF;
-    urgent: 	#F7768EFF;
-}
+@import "colors.rasi"
 
 * {
-  bg: #1E1E2E99;
-  bg-alt: #585b7066;
-  bg-selected: #31324466;
+  bg: @background;
+  bg-alt: @background-alt;
+  bg-selected: @selected;
 
-  fg: #619eff;
-  fg-alt: #7f849c;
+  fg: @blue;
+  fg-alt: @foreground;
   
   border: 0;
   margin:5;
