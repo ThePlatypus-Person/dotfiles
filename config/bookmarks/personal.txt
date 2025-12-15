@@ -2,3 +2,4 @@ TokyoNight Ports :: https://wixdaq.github.io/Tokyo-Night-Website/ports.html
 ChatGPT :: https://chatgpt.com/
 Gravesoft :: https://gravesoft.dev/
 Dictionary :: https://www.merriam-webster.com/
+NixDev :: https://nix.dev/tutorials/nix-language#paths

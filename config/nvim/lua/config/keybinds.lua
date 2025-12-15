@@ -32,3 +32,13 @@ vim.keymap.set("i", "<Down>", "<C-o>gj")
 
 -- Show diagnostics in a floating window
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = "Show diagnostic in floating window" })
+
+-- Yank and Copy Clipboard Usage
+--Yank to system clipboard
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to system clipboard" })
+vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard" })
+
+-- Paste from system clipboard
+vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
+vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste from system clipboard (before)" })
+vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste from system clipboard (before)" })
