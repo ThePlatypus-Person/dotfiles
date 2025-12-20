@@ -107,6 +107,8 @@ in
 	udiskie
 	polkit_gnome
 	blueman
+	htop
+	btop
 
 	rofi
 	dunst
@@ -154,6 +156,26 @@ in
 
 	openjdk21
 	jetbrains.idea-community
+	sqlite
+
+	# For XDN
+	(python312.withPackages (ps: with ps; [
+				 python-dotenv
+				 packaging
+	]))
+
+	fuse3
+	docker_28
+	docker-compose
+	pkg-config
+
+	go
+
+	ant
+	#openjdk21
+	#rustc
+	#cargo
+
     ];
 
 

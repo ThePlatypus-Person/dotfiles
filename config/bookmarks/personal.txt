@@ -3,3 +3,36 @@ ChatGPT :: https://chatgpt.com/
 Gravesoft :: https://gravesoft.dev/
 Dictionary :: https://www.merriam-webster.com/
 NixDev :: https://nix.dev/tutorials/nix-language#paths
+/lit/ Wiki :: https://lit.trainroll.xyz/wiki/Recommended_Reading/sub
+OSSU :: https://github.com/ossu/computer-science
+shadcn.ui :: https://ui.shadcn.com/
+/sig/ MEGA Archive :: https://mega.nz/folder/v6AzSDSJ#9nFO3qrNGUEKs3M-uMFfuw
+Connected Papers :: https://www.connectedpapers.com/
+Bayesian Statistics :: https://www.youtube.com/watch?v=NIqeFYUhSzU
+Crafting Interpreters :: https://craftinginterpreters.com/a-map-of-the-territory.html
+Popping Song Playlist :: https://www.youtube.com/watch?v=7gGb218uDiU&list=RDEMCrEvD8ctsnjyaN56QUYWhA&index=27
+CSRankings :: https://csrankings.org/#/index?all&us
+InstallGentoo Wiki :: https://wiki.installgentoo.com/wiki/Main_Page
+Dist Sys Course :: https://www.distributedsystemscourse.com/
+DeathStarBench :: https://github.com/delimitrou/DeathStarBench/tree/master
+Tailwind Colors :: https://tailwindcolor.com/
+Ollama :: https://github.com/ollama/ollama
+LeafletJS :: https://leafletjs.com/reference.html#geojson
+Docker Deep Dive :: https://www.youtube.com/watch?v=Z7swPxOeRzM&list=PLOwc7JW6aCQFUrd5uOsLKIvWI_q-ghblc
+Perplexity :: https://www.perplexity.ai/
+Grok :: https://grok.com/
+Tony-btw :: https://www.youtube.com/@tony-btw/videos
+ChartJS :: https://www.chartjs.org/docs/latest/samples/other-charts/bubble.html
+Math Rock Playlist :: https://www.youtube.com/watch?v=zlG5txG63d0&list=RDL0U8q4ODBkg&index=16
+NixOS Guide :: https://nixos-and-flakes.thiscute.world/introduction/
+Typst Documentation :: https://typst.app/docs/reference/symbols/sym/
+Reddit Socialism Starterpack :: https://www.reddit.com/r/socialism/wiki/index/starterpack/
+Excalidraw :: https://excalidraw.com/
+Desmos :: https://www.desmos.com/calculator
+Marcus Aurelius :: Meditations :: https://classics.mit.edu/Antoninus/meditations.html
+How not to Fail at Life :: https://imgur.com/a/FwSA5
+Doing Calculus (Spotify) :: https://open.spotify.com/playlist/5rXz8qxKWicQTFRpoxSKIr?si=70b73b4b2d5e4b9d&nd=1
+How a Computer Works (Video) :: https://www.youtube.com/watch?v=5f3NJnvnk7k
+Tailwind Cheat Sheet :: https://tailwindcomponents.com/cheatsheet/
+Overview of Mathematics (Book) :: https://www.amazon.com/dp/0486409163
+Docker Hub :: https://hub.docker.com/

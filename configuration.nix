@@ -143,6 +143,14 @@
 	};
 
 
+	# Docker
+	virtualisation.docker.enable = true;
+	virtualisation.docker.rootless = {
+	    enable = true;
+	    setSocketVariable = true;
+	};
+
+
 	# Nix Settings
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 	system.stateVersion = "25.05";

@@ -326,16 +326,13 @@ class NetworkStatusComponent(base.InLoopPollText):
 # Widgets
 def init_widgets_list():
     widgets_list = [
+        widget.Spacer(length=7),
         widget.Image(
-            filename=f"~/.config/qtile/assets/genchu.png",
+            filename="~/.config/qtile/assets/nix.png",
             background=colors[0],
             margin_y=7,
-            margin_x=5,
-            mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn(
-                    "xdg-open https://wiki.gentoo.org/wiki/Main_Page"
-                )
-            },
+            margin_x=7,
+            rounded=False,
         ),
 
         widget.TextBox(
