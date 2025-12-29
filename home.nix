@@ -146,6 +146,8 @@ in
 	xsel
 
 	zathura
+	zathuraPkgs.zathura_pdf_mupdf
+
 	slack
 	discord-ptb
 	keepassxc

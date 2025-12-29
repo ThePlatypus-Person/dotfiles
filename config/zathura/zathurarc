@@ -23,8 +23,9 @@ set inputbar-bg "#1a1b26"
 set inputbar-fg "#c0caf5"
 set statusbar-bg "#1a1b26"
 set statusbar-fg "#c0caf5"
-set highlight-color "#e0af68"
-set highlight-active-color "#9ece6a"
+#set highlight-color "#e0af68"
+set highlight-fg "#1a1b26"
+#set highlight-active-color "#1a1b26"
 set default-bg "#1a1b26"
 set default-fg "#c0caf5"
 set render-loading true
@@ -33,6 +34,7 @@ set render-loading-bg "#c0caf5"
 set guioptions none
 
 set recolor false
+set mode continuous
 #
 # Recolor mode settings
 # <C-r> to switch modes

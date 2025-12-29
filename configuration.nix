@@ -105,6 +105,7 @@
 		file
 		gvfs
 		unzip
+		jmtpfs
 	];
 
 	programs.chromium = {
