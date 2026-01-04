@@ -97,6 +97,15 @@ in
 	recursive = true;
     }) configs;
 
+    xdg.desktopEntries.sourcetrail = {
+	name = "Sourcetrail";
+	genericName = "Source Code Explorer";
+	exec = "sourcetrail";
+	icon = "sourcetrail";
+	terminal = false;
+	categories = [ "Development" ];
+    };
+
     home.packages = with pkgs; [
 	playerctl
 	brightnessctl
@@ -155,6 +164,8 @@ in
 	typst
 	bruno
 	tmux
+	onlyoffice-desktopeditors
+	(callPackage ./apps/sourcetrail.nix { })
 
 	openjdk21
 	jetbrains.idea-community
@@ -177,7 +188,6 @@ in
 	#openjdk21
 	#rustc
 	#cargo
-
     ];
 
 
