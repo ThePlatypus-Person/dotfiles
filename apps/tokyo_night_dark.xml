@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<config name="tokyo_night_dark">
+<config>
     <window>
 	<background>#1a1b26</background>
 	<separator>#414868</separator>
-	<focus>#7aa2f7</focus>
+	<focus>#2959aa</focus>
 	<scrollbar>
 	    <background>transparent</background>
 	    <handle>#444b6a</handle>
@@ -20,13 +19,14 @@
 	    <text>#c0caf5</text>
 	    <background>#3b4261</background>
 	    <border>#565f89</border>
-	    <border_hover>#bb9af7</border_hover>
+	    <border_hover>#5a3e8e</border_hover>
 	    <icon>white</icon>
 	</button>
     </window>
 
     <search>
 	<background>#1a1b26</background>
+
 	<button>
 	    <normal>#3b4261</normal>
 	    <hover>#565f89</hover>
@@ -35,12 +35,14 @@
 	    <icon>white</icon>
 	    <icon_disabled>#414868</icon_disabled>
 	</button>
+
 	<field>
 	    <text>#c0caf5</text>
 	    <background>#24283b</background>
 	    <border>#414868</border>
-	    <highlight>#7aa2f7</highlight>
+	    <highlight>#2959aa</highlight>
 	</field>
+
 	<popup>
 	    <text>#a9b1d6</text>
 	    <by_text>#565f89</by_text>
@@ -48,35 +50,63 @@
 	    <highlight>#292e42</highlight>
 	    <line>#414868</line>
 	</popup>
+
 	<query>
 	    <none>
-		<normal><fill>#292e42</fill><text>#c0caf5</text></normal>
-		<hover><fill>#3b4261</fill><text>#c0caf5</text></hover>
+		<normal>
+		    <fill>#292e42</fill>
+		    <text>#c0caf5</text>
+		</normal>
+		<hover>
+		    <fill>#3b4261</fill>
+		    <text>#c0caf5</text>
+		</hover>
 	    </none>
 	    <command>
-		<normal><fill>#9ece6a</fill><text>#1a1b26</text></normal>
-		<hover><fill>#b9f27c</fill><text>#1a1b26</text></hover>
+		<normal>
+		    <fill>#9ece6a</fill>
+		    <text>#1a1b26</text>
+		</normal>
+		<hover>
+		    <fill>#b9f27c</fill>
+		    <text>#1a1b26</text>
+		</hover>
 	    </command>
 	    <operator>
-		<normal><fill>#f7768e</fill><text>#1a1b26</text></normal>
-		<hover><fill>#ff9e64</fill><text>#1a1b26</text></hover>
+		<normal>
+		    <fill>#8c4351</fill>
+		    <text>#1a1b26</text>
+		</normal>
+		<hover>
+		    <fill>#ff9e64</fill>
+		    <text>#1a1b26</text>
+		</hover>
 	    </operator>
 	    <fulltext>
-		<normal><fill>#7aa2f7</fill><text>#1a1b26</text></normal>
-		<hover><fill>#89ddff</fill><text>#1a1b26</text></hover>
+		<normal>
+		    <fill>#2959aa</fill>
+		    <text>#1a1b26</text>
+		</normal>
+		<hover>
+		    <fill>#343b58</fill>
+		    <text>#1a1b26</text>
+		</hover>
 	    </fulltext>
 	</query>
     </search>
 
     <code>
 	<background>#1a1b26</background>
+
 	<navigation>
 	    <background>#16161e</background>
 	    <text>#787c99</text>
 	    <line>#414868</line>
 	</navigation>
+
 	<file>
 	    <background>#24283b</background>
+
 	    <title>
 		<text>#c0caf5</text>
 		<normal>#24283b</normal>
@@ -86,103 +116,414 @@
 		<border>#1a1b26</border>
 		<hatching>dark</hatching>
 	    </title>
+
 	    <ref_count>
 		<text>#a9b1d6</text>
 		<background>#16161e</background>
 	    </ref_count>
 	</file>
+
 	<snippet>
 	    <background>#1a1b26</background>
+
 	    <title>
 		<text>#565f89</text>
 		<background>transparent</background>
 	    </title>
+
 	    <line_number>
 		<text>#3b4261</text>
 		<inactive_text>#24283b</inactive_text>
 		<background>#1a1b26</background>
 		<marker>
 		    <active>#414868</active>
-		    <focus>#7aa2f7</focus>
+		    <focus>#2959aa</focus>
 		</marker>
 	    </line_number>
+
 	    <syntax>
 		<text>#a9b1d6</text>
-		<directive>#bb9af7</directive>
-		<keyword>#bb9af7</keyword>
+		<directive>#5a3e8e</directive>
+		<keyword>#5a3e8e</keyword>
 		<type>#2ac3de</type>
 		<comment>#565f89</comment>
 		<number>#ff9e64</number>
 		<quotation>#9ece6a</quotation>
-		<function>#7aa2f7</function>
+		<function>#2959aa</function>
 	    </syntax>
+
 	    <selection>
 		<text>#c0caf5</text>
 		<background>#364a82</background>
 	    </selection>
+
 	    <annotation>
 		<token>
-		    <normal><border>transparent</border><fill>transparent</fill></normal>
-		    <focus><border>#7aa2f7</border><fill>transparent</fill></focus>
-		    <active><border>transparent</border><fill>#364a82</fill><text>#c0caf5</text></active>
+		    <normal>
+			<border>transparent</border>
+			<fill>transparent</fill>
+		    </normal>
+		    <focus>
+			<border>#2959aa</border>
+			<fill>transparent</fill>
+		    </focus>
+		    <active>
+			<border>transparent</border>
+			<fill>#364a82</fill>
+			<text>#c0caf5</text>
+		    </active>
 		</token>
+		<local_symbol>
+		    <normal>
+			<border>transparent</border>
+			<fill>transparent</fill>
+		    </normal>
+		    <focus>
+			<border>#565f89</border>
+			<fill>#292e42</fill>
+			<text>#c0caf5</text>
+		    </focus>
+		    <active>
+			<border>#2959aa</border>
+			<fill>#292e42</fill>
+			<text>#c0caf5</text>
+		    </active>
+		</local_symbol>
+		<scope>
+		    <normal>
+			<border>transparent</border>
+			<fill>transparent</fill>
+		    </normal>
+		</scope>
+		<error>
+		    <normal>
+			<border>transparent</border>
+			<fill>#4b252c</fill>
+			<text>#8c4351</text>
+		    </normal>
+		    <focus>
+			<fill>#8c4351</fill>
+			<text>#1a1b26</text>
+		    </focus>
+		</error>
+		<fulltext_search>
+		    <normal>
+			<fill>#2959aa</fill>
+			<text>#1a1b26</text>
+		    </normal>
+		    <focus>
+			<border>#343b58</border>
+			<fill>#364a82</fill>
+		    </focus>
+		</fulltext_search>
+		<screen_search>
+		    <normal>
+			<border>transparent</border>
+			<fill>#9ece6a</fill>
+			<text>#1a1b26</text>
+		    </normal>
+		    <focus>
+			<fill>#5a3e8e</fill>
+		    </focus>
+		</screen_search>
 	    </annotation>
 	</snippet>
     </code>
 
     <graph>
 	<background>#1a1b26</background>
+
 	<node>
 	    <default>
-		<fill><normal>#24283b</normal></fill>
-		<border><normal>#414868</normal></border>
-		<text><normal>#c0caf5</normal></text>
-		<icon><normal>#c0caf5</normal></icon>
-		<hatching><normal>#16161e</normal></hatching>
+		<fill>
+		    <normal>#24283b</normal>
+		</fill>
+		<border>
+		    <normal>#414868</normal>
+		</border>
+		<text>
+		    <normal>#c0caf5</normal>
+		</text>
+		<icon>
+		    <normal>#c0caf5</normal>
+		</icon>
+		<hatching>
+		    <normal>#16161e</normal>
+		</hatching>
 	    </default>
+
 	    <type>
-		<border><normal>#2ac3de</normal><highlight>#89ddff</highlight></border>
+		<border>
+		    <normal>#2ac3de</normal>
+		    <highlight>#343b58</highlight>
+		</border>
 	    </type>
+	    <built_in_type><like>type</like></built_in_type>
+	    <class><like>type</like></class>
+	    <interface><like>type</like></interface>
+	    <struct><like>type</like></struct>
+	    <enum><like>type</like></enum>
+	    <union><like>type</like></union>
+	    <record><like>type</like></record>
+	    <typedef><like>type</like></typedef>
+	    <type_parameter><like>type</like></type_parameter>
+
 	    <function>
-		<fill><normal>#7aa2f7</normal><highlight>#89ddff</highlight></fill>
-		<border><normal>transparent</normal><highlight>#c0caf5</highlight></border>
-		<hatching><normal>#24283b</normal></hatching>
+		<fill>
+		    <normal>#2959aa</normal>
+		    <highlight>#343b58</highlight>
+		</fill>
+		<border>
+		    <normal>transparent</normal>
+		    <highlight>#c0caf5</highlight>
+		</border>
+		<hatching>
+		    <normal>#24283b</normal>
+		</hatching>
 	    </function>
+	    <method><like>function</like></method>
+	    <concept><like>function</like></concept>
+
 	    <global_variable>
-		<fill><normal>#bb9af7</normal><highlight>#c0caf5</highlight></fill>
-		<border><normal>transparent</normal><highlight>#c0caf5</highlight></border>
-		<hatching><normal>#24283b</normal></hatching>
+		<fill>
+		    <normal>#5a3e8e</normal>
+		    <highlight>#c0caf5</highlight>
+		</fill>
+		<border>
+		    <normal>transparent</normal>
+		    <highlight>#c0caf5</highlight>
+		</border>
+		<hatching>
+		    <normal>#24283b</normal>
+		</hatching>
 	    </global_variable>
+	    <field><like>global_variable</like></field>
+	    <enum_constant><like>global_variable</like></enum_constant>
+
+	    <symbol><like>type</like></symbol>
+	    <namespace>
+		<fill>
+		    <normal>#8c4351</normal>
+		</fill>
+		<border>
+		    <normal>#414868</normal>
+		    <highlight>#c0caf5</highlight>
+		</border>
+		<icon>
+		    <normal>#c0caf5</normal>
+		</icon>
+		<hatching>
+		    <normal>#4b252c</normal>
+		</hatching>
+	    </namespace>
+	    <module><like>namespace</like></module>
+	    <package><like>namespace</like></package>
+
 	    <file>
-		<fill><normal>#414868</normal><highlight>#565f89</highlight></fill>
-		<border><normal>#1a1b26</normal><highlight>#c0caf5</highlight></border>
-		<hatching><normal>#16161e</normal></hatching>
+		<fill>
+		    <normal>#414868</normal>
+		    <highlight>#565f89</highlight>
+		</fill>
+		<border>
+		    <normal>#1a1b26</normal>
+		    <highlight>#c0caf5</highlight>
+		</border>
+		<hatching>
+		    <normal>#16161e</normal>
+		</hatching>
 	    </file>
+	    <macro><like>file</like></macro>
+	    <annotation><like>file</like></annotation>
+
+	    <access>
+		<fill>
+		    <normal>#1a1b26</normal>
+		</fill>
+	    </access>
+	    <bundle>
+		<fill>
+		    <normal>#1a1b26</normal>
+		</fill>
+		<border>
+		    <normal>#414868</normal>
+		    <highlight>#2959aa</highlight>
+		</border>
+	    </bundle>
+	    <count_number>
+		<fill>
+		    <normal>#2959aa</normal>
+		</fill>
+		<border>
+		    <normal>#1a1b26</normal>
+		</border>
+		<text>
+		    <normal>#1a1b26</normal>
+		</text>
+	    </count_number>
+	    <qualifier>
+		<fill>
+		    <normal>#8c4351</normal>
+		</fill>
+		<border>
+		    <normal>#1a1b26</normal>
+		</border>
+		<text>
+		    <normal>#1a1b26</normal>
+		</text>
+	    </qualifier>
+	    <text>
+		<fill>
+		    <normal>transparent</normal>
+		</fill>
+		<text>
+		    <normal>#565f89</normal>
+		</text>
+	    </text>
 	    <group>
 		<default>
-		    <fill><normal>transparent</normal></fill>
-		    <border><normal>#414868</normal></border>
+		    <fill>
+			<normal>transparent</normal>
+		    </fill>
+		    <border>
+			<normal>#414868</normal>
+		    </border>
 		</default>
+		<file>
+		    <fill>
+			<normal>transparent</normal>
+		    </fill>
+		    <text>
+			<normal>#a9b1d6</normal>
+		    </text>
+		    <border>
+			<normal>#414868</normal>
+			<highlight>#565f89</highlight>
+		    </border>
+		</file>
+		<namespace>
+		    <fill>
+			<normal>transparent</normal>
+		    </fill>
+		    <text>
+			<normal>#a9b1d6</normal>
+		    </text>
+		    <border>
+			<normal>#8c4351</normal>
+			<highlight>#ff9e64</highlight>
+		    </border>
+		</namespace>
+		<inheritance>
+		    <fill>
+			<normal>transparent</normal>
+		    </fill>
+		    <border>
+			<normal>#444b6a</normal>
+		    </border>
+		</inheritance>
 	    </group>
 	</node>
 	<edge>
-	    <default>#414868</default>
-	    <use>#7aa2f7</use>
-	    <call>#bb9af7</call>
-	    <inheritance>#f7768e</inheritance>
+	    <default>#444b6a</default>
+	    <type_use>#444b6a</type_use>
+	    <inheritance>#8c4351</inheritance>
+
+	    <use>#2959aa</use>
+	    <call>#5a3e8e</call>
+	    <call_trail_focus>#c0caf5</call_trail_focus>
+	    <override>#9ece6a</override>
+
+	    <type_argument>#ff9e64</type_argument>
+	    <template_specialization>#ff9e64</template_specialization>
+
 	    <include>#9ece6a</include>
+	    <import>#9ece6a</import>
+	    <macro_use>#9ece6a</macro_use>
+	    <annotation_use>#9ece6a</annotation_use>
+
+	    <bundled_edges>#292e42</bundled_edges>
 	</edge>
     </graph>
 
     <tab>
 	<background>#1a1b26</background>
 	<bar>
-	    <background>#16161e</background>
+	    <background>#24283b</background>
 	    <border>#414868</border>
 	    <button>
-		<text><normal>#565f89</normal><press>#c0caf5</press></text>
-		<background><normal>#16161e</normal><hover>#24283b</hover><press>#1a1b26</press></background>
+		<text>
+		    <normal>#565f89</normal>
+		    <hover>#a9b1d6</hover>
+		    <press>#c0caf5</press>
+		</text>
+		<border>
+		    <normal>#444b6a</normal>
+		    <press>#565f89</press>
+		</border>
+		<background>
+		    <normal>#24283b</normal>
+		    <hover>#292e42</hover>
+		    <press>#1a1b26</press>
+		</background>
+		<icon>#565f89</icon>
 	    </button>
 	</bar>
     </tab>
+
+    <table>
+	<background>#1a1b26</background>
+	<table>#414868</table>
+	<text>
+	    <normal>#c0caf5</normal>
+	    <active>#1a1b26</active>
+	    <disabled>#565f89</disabled>
+	</text>
+	<table_line_1>
+	    <normal>#1a1b26</normal>
+	    <active>#2959aa</active>
+	</table_line_1>
+	<table_line_2>
+	    <normal>#16161e</normal>
+	    <active>#2959aa</active>
+	</table_line_2>
+    </table>
+
+    <screen_search>
+	<background>#24283b</background>
+	<border>#414868</border>
+	<box>
+	    <background>#1a1b26</background>
+	    <text>#c0caf5</text>
+	    <match_label>#565f89</match_label>
+	</box>
+	<filter>#c0caf5</filter>
+	<button>
+	    <normal>#1a1b26</normal>
+	    <hover>#292e42</hover>
+	    <press>#24283b</press>
+	    <disabled>#16161e</disabled>
+	    <icon>white</icon>
+	    <icon_disabled>#414868</icon_disabled>
+	</button>
+    </screen_search>
+
+    <custom_trail>
+	<background>#1a1b26</background>
+	<alt_background>#24283b</alt_background>
+	<separator>#414868</separator>
+	<text>#c0caf5</text>
+	<text_disabled>#565f89</text_disabled>
+	<background_disabled>#16161e</background_disabled>
+	<button>
+	    <default>
+		<text>#c0caf5</text>
+		<background>#1a1b26</background>
+		<border>#c0caf5</border>
+	    </default>
+	    <hover>
+		<text>#1a1b26</text>
+		<background>#c0caf5</background>
+		<border>#c0caf5</border>
+	    </hover>
+	</button>
+    </custom_trail>
 </config>
