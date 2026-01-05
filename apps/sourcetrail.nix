@@ -22,43 +22,42 @@
 }:
 
 let
-mavenDeps = stdenv.mkDerivation {
-    name = "sourcetrail-java-deps";
-    inherit (stdenv.mkDerivation {
-	src = fetchFromGitHub {
-	    owner = "petermost";
-	    repo = "Sourcetrail";
-	    rev = "c88503b35821d22fdb0182f929d2ea34bc2132a7";
-	    fetchSubmodules = true;
-	    hash = "sha256-vmkbOP+w7/A2srAmaunYtRQpMxGcyqTXFep8gSoJkm4=";
-	};
-    }) src;
+    mavenDeps = stdenv.mkDerivation {
+	name = "sourcetrail-java-deps";
+	inherit (stdenv.mkDerivation {
+	    src = fetchFromGitHub {
+		owner = "petermost";
+		repo = "Sourcetrail";
+		rev = "c88503b35821d22fdb0182f929d2ea34bc2132a7";
+		fetchSubmodules = true;
+		hash = "sha256-vmkbOP+w7/A2srAmaunYtRQpMxGcyqTXFep8gSoJkm4=";
+	    };
+	}) src;
 
-    nativeBuildInputs = [ maven jdk24 ];
+	nativeBuildInputs = [ maven jdk24 ];
 
-    # Run maven to fetch dependencies into a local folder
-    buildPhase = ''
-	export JAVA_HOME="${jdk24}"
+	# Run maven to fetch dependencies into a local folder
+	buildPhase = ''
+	    export JAVA_HOME="${jdk24}"
 
-	# Create a specific repository folder
-	mkdir -p $out/repository
-	cd java_indexer
+	    # Create a specific repository folder
+	    mkdir -p $out/repository
+	    cd java_indexer
 
-	mvn dependency:go-offline -Dmaven.repo.local=$out/repository
-	mvn dependency:resolve-plugins -Dmaven.repo.local=$out/repository
-    '';
+	    mvn dependency:go-offline -Dmaven.repo.local=$out/repository
+	    mvn dependency:resolve-plugins -Dmaven.repo.local=$out/repository
+	'';
 
-    # We only care about the downloaded artifacts
-    installPhase = ''
-	find $out -name "_remote.repositories" -delete
-	find $out -name "*.lastUpdated" -delete
-    '';
+	# We only care about the downloaded artifacts
+	installPhase = ''
+	    find $out -name "_remote.repositories" -delete
+	    find $out -name "*.lastUpdated" -delete
+	'';
 
-    outputHashAlgo = "sha256";
-    outputHashMode = "recursive";
-    outputHash = "sha256-RuHq6KMsY/PDKSOtv8dHW7dGpG/moQsXMv5g6WTVzt8=";
-};
-
+	outputHashAlgo = "sha256";
+	outputHashMode = "recursive";
+	outputHash = "sha256-RuHq6KMsY/PDKSOtv8dHW7dGpG/moQsXMv5g6WTVzt8=";
+    };
 in
 stdenv.mkDerivation {
     pname = "sourcetrail";
@@ -168,7 +167,19 @@ stdenv.mkDerivation {
 
     installPhase = ''
 	runHook preInstall
+
+	mkdir -p $out/bin $out/share/sourcetrail
 	cmake --install /build/build/system-release --prefix $out
+	cd $out/bin
+	ln -s ../Sourcetrail/app/Sourcetrail Sourcetrail
+	ln -s ../Sourcetrail/app/sourcetrail_indexer sourcetrail_indexer
+	cd -
+
+	TARGET_DIR="$out/Sourcetrail/app/data/color_schemes"
+	mkdir -p "$TARGET_DIR"
+	#cp ${./tokyo_night_dark.xml} "$TARGET_DIR/tokyo_night_dark.xml"
+	ln -s "/home/mori/dotfiles/apps/tokyo_night_dark.xml" "$TARGET_DIR/tokyo_night_dark.xml"
+
 	runHook postInstall
     '';
 

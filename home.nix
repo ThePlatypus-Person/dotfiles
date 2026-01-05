@@ -100,7 +100,7 @@ in
     xdg.desktopEntries.sourcetrail = {
 	name = "Sourcetrail";
 	genericName = "Source Code Explorer";
-	exec = "sourcetrail";
+	exec = "Sourcetrail";
 	icon = "sourcetrail";
 	terminal = false;
 	categories = [ "Development" ];
