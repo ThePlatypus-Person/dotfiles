@@ -56,6 +56,10 @@ play = [
 	{ run = 'mpv --force-window %*', orphan = true, for = "windows" },
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
+pdf = [
+  { run = "zathura \"$@\"", desc = "Zathura", block = false },
+  { run = "xdg-open \"$@\"", desc = "System default" },
+]
 
 [open]
 rules = [
@@ -69,6 +73,8 @@ rules = [
 	{ mime = "image/*", use = [ "open", "reveal" ] },
 	# Media
 	{ mime = "{audio,video}/*", use = [ "play", "reveal" ] },
+	# PDF
+	{ mime = "application/pdf", use = "pdf" },
 	# Archive
 	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = [ "extract", "reveal" ] },
 	# JSON
