@@ -93,6 +93,14 @@ in
 
 	    zle -N yazi-launcher
 	    bindkey '^o' yazi-launcher
+
+	    export SSH_AUTH_SOCK="/run/user/$(id -u)/ssh-agent"
+
+	    if [ -S "$SSH_AUTH_SOCK" ]; then
+		if ! ssh-add -l | grep -q "ThePlatypus-Person"; then
+		    ssh-add ~/.ssh/github-t14-g2
+		fi
+	    fi
 	'';
     };
 
