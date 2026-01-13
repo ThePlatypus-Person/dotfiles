@@ -12,6 +12,7 @@ Bayesian Statistics :: https://www.youtube.com/watch?v=NIqeFYUhSzU
 Crafting Interpreters :: https://craftinginterpreters.com/a-map-of-the-territory.html
 Popping Song Playlist :: https://www.youtube.com/watch?v=7gGb218uDiU&list=RDEMCrEvD8ctsnjyaN56QUYWhA&index=27
 CSRankings :: https://csrankings.org/#/index?all&us
+CSStipendRankings :: https://csstipendrankings.org/
 InstallGentoo Wiki :: https://wiki.installgentoo.com/wiki/Main_Page
 Dist Sys Course :: https://www.distributedsystemscourse.com/
 DeathStarBench :: https://github.com/delimitrou/DeathStarBench/tree/master

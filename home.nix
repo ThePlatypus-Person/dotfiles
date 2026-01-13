@@ -57,7 +57,7 @@ in
 	syntaxHighlighting.enable = true;
 
 	shellAliases = {
-	    ll = "ls -al";
+	    ll = "ls -alh";
 	    ".." = "cd ..";
 	    conf = "sudo vim /etc/nixos/configuration.nix";
 	    home = "vim /etc/nixos/home.nix";
@@ -129,6 +129,7 @@ in
 	xfce.thunar
 	unclutter
 	dmenu
+	nsxiv
 
 	betterlockscreen
 	dconf
