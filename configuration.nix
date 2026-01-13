@@ -90,6 +90,7 @@
 	    MOZ_USE_XINPUT2 = "1";
 	};
 
+	programs.ssh.startAgent = true;
 	programs.zsh.enable = true;
 	environment.systemPackages = with pkgs; [
 		vim

@@ -47,6 +47,10 @@ in
 	extraConfig = {
 	    init.defaultBranch = "main";
 	    pull.rebase = true;
+	    credential.helper = "${
+		pkgs.git.override { withLibsecret = true; }
+	    }/bin/git-credential-libsecret";
+	    push = { autoSetupRemote = true; };
 	};
     };
     programs.starship.enable = true;
