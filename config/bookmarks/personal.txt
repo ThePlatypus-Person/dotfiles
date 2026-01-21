@@ -37,3 +37,9 @@ How a Computer Works (Video) :: https://www.youtube.com/watch?v=5f3NJnvnk7k
 Tailwind Cheat Sheet :: https://tailwindcomponents.com/cheatsheet/
 Overview of Mathematics (Book) :: https://www.amazon.com/dp/0486409163
 Docker Hub :: https://hub.docker.com/
+Dist Sys YT :: https://www.youtube.com/watch?v=7VbL89mKK3M&list=PLOE1GTZ5ouRPbpTnrZ3Wqjamfwn_Q5Y9A
+Jepsen :: https://jepsen.io/consistency/models
+
+Typst Grape Suite :: https://typst.app/universe/package/grape-suite
+Typst Graceful Genetics :: https://typst.app/universe/package/graceful-genetics
+

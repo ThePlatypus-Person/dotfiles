@@ -7,9 +7,10 @@
             url = "github:nix-community/home-manager/release-25.05";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+	nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
 
-    outputs = { self, nixpkgs, home-manager, ... }: {
+    outputs = { self, nixpkgs, home-manager, ... }@inputs: {
         nixosConfigurations.t14-g2 = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
@@ -19,6 +20,7 @@
                         home-manager = {
                             useGlobalPkgs = true;
                             useUserPackages = true;
+			    extraSpecialArgs = { inherit inputs; };
                             users.mori = import ./home.nix;
                             backupFileExtension = "backup";
                         };

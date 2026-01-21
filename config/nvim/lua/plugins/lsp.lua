@@ -104,7 +104,7 @@ return {
         require('mason').setup({})
         require('mason-lspconfig').setup({
             ensure_installed = {
-                "lua_ls", "html", "tailwindcss",
+                "lua_ls", "html", "tailwindcss"
             },
             handlers = {
                 -- this first function is the "default handler"
@@ -137,6 +137,11 @@ return {
                 end,
             },
         })
+	vim.lsp.config("tinymist", {
+	    cmd = { "tinymist" }, -- system / nix binary
+	    filetypes = { "typst" },
+	})
+	vim.lsp.enable("tinymist")
 
         local cmp = require('cmp')
 

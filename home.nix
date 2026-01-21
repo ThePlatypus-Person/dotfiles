@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 let 
+    unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
     configDir = "${config.home.homeDirectory}/dotfiles/config";
     create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
     # Standard .config/directory
@@ -166,6 +167,7 @@ in
 	nodejs
 	gcc
 	xsel
+	unstable.tinymist
 
 	zathura
 	zathuraPkgs.zathura_pdf_mupdf
