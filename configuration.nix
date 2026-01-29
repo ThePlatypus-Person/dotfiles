@@ -83,8 +83,10 @@
     '';
 
 
-# Packages
+    # Packages
     nixpkgs.config.allowUnfree = true;
+    # Allow installation of unfree corefonts package
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "corefonts" ];
     programs.firefox.enable = true;
     environment.sessionVariables = {
 	MOZ_USE_XINPUT2 = "1";
@@ -131,6 +133,10 @@
 	nerd-fonts.jetbrains-mono
 	nerd-fonts.symbols-only
 	font-awesome_6
+    ];
+
+    fonts.fonts = with pkgs; [
+	corefonts
     ];
 
 
