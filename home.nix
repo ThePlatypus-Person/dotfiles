@@ -131,7 +131,6 @@ in
 	blueman
 	htop
 	btop
-	busybox
 
 	rofi
 	dunst
