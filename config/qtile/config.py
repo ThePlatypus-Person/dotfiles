@@ -455,10 +455,19 @@ def init_widgets_list():
         widget.Battery(
             background=colors[10],
             foreground=colors[6],
+            charging_foreground=colors[4],   # green while plugged in
+            low_foreground=colors[3],        # red when low & discharging
+            low_percentage=0.15,             # threshold for "low"
             padding=3, 
             update_interval=5,
+            show_short_text=False,           # always use {char} + percent
+            charge_char="󰂄",              # 󰂄 bolt
+            discharge_char="󰁹",           # 󰁹 battery
+            full_char="󰁹",                # 󰁹 battery (full)
+            empty_char="󰁺",               # 󰁺 battery alert
+            unknown_char="󰂑",             # 󰂑 battery unknown
             mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
-            format='  {percent:2.0%}',
+            format='{char}  {percent:2.0%}',
         ),
 
         widget.TextBox(
