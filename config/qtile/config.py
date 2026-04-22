@@ -220,10 +220,20 @@ def run(cmd):
 
 
 # Wifi/Ethernet Widget
-class NetworkStatusComponent(base.InLoopPollText):
+#
+# Uses ThreadPoolText (not InLoopPollText) so poll() runs in a background
+# thread and never blocks Qtile's main event loop. The previous combination
+# of InLoopPollText + socket.connect("8.8.8.8", 53) with a 2s timeout was
+# the primary cause of intermittent group-switch latency: every 5s the
+# entire event loop would stall for up to 2000ms waiting on the network.
+class NetworkStatusComponent(base.ThreadPoolText):
+    defaults = [
+        ("update_interval", 5, "Update interval in seconds"),
+    ]
+
     def __init__(self, **config):
-        self.update_interval = 5  # Update every 5 seconds
-        super().__init__(**config)
+        super().__init__("", **config)
+        self.add_defaults(NetworkStatusComponent.defaults)
 
     def poll(self):
         net = self.get_network_status()
@@ -267,13 +277,17 @@ class NetworkStatusComponent(base.InLoopPollText):
         except Exception:
             return "unknown"
 
-    def internet_ok(self, timeout=2):
-        """Check real internet connectivity."""
+    def link_up(self, iface):
+        """Non-blocking link check via sysfs — reads /sys/class/net/<iface>/carrier.
+        This replaces the old internet_ok() which did a blocking TCP connect
+        to 8.8.8.8:53 with a 2s timeout on every poll, stalling the event loop.
+        Not a full internet-reachability check, but appropriate for a status bar."""
+        if not iface:
+            return False
         try:
-            socket.setdefaulttimeout(timeout)
-            socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect(("8.8.8.8", 53))
-            return True
-        except:
+            with open(f"/sys/class/net/{iface}/carrier") as f:
+                return f.read().strip() == "1"
+        except (FileNotFoundError, PermissionError, OSError):
             return False
 
     def get_network_status(self):
@@ -281,7 +295,7 @@ class NetworkStatusComponent(base.InLoopPollText):
         ntype = self.interface_type(iface)
 
         ssid = self.get_wifi_ssid() if ntype == "wifi" else None
-        online = self.internet_ok()
+        online = self.link_up(iface)
 
         return {
             "interface": iface,
@@ -442,6 +456,7 @@ def init_widgets_list():
             background=colors[10],
             foreground=colors[6],
             padding=3, 
+            update_interval=5,
             mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
             format='  {percent:2.0%}',
         ),
@@ -459,6 +474,7 @@ def init_widgets_list():
             background=colors[10],
             foreground=colors[6],
             padding=3, 
+            update_interval=2,
             mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
             format='  {load_percent}%',
         ),
@@ -495,6 +511,7 @@ def init_widgets_list():
             background=colors[10],
             foreground=colors[6],
             padding=3,
+            update_interval=3,
             mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
             format="{NotAvailable: .0f} {mm}B",
             fmt=' {}',
@@ -509,10 +526,19 @@ def init_widgets_list():
             fontsize=57,
         ),
 
-        widget.PulseVolume(
+        # Was widget.PulseVolume — crashed in asyncio with
+        # "'NoneType' object has no attribute 'api_pointer'" on repeated PA
+        # reconnection attempts, flooding the event loop with exceptions.
+        # widget.Volume with pamixer is stable and matches the keybinds above.
+        widget.Volume(
             background=colors[10],
             foreground=colors[6],
             padding=3,
+            update_interval=2,
+            get_volume_command="pamixer --get-volume-human",
+            volume_up_command="pamixer -i 5",
+            volume_down_command="pamixer -d 5",
+            mute_command="pamixer -t",
             mouse_callbacks={'Button1': lambda: qtile.cmd_spawn('pavucontrol')},
             fmt='  {}',
         ),
@@ -583,7 +609,11 @@ def init_widgets_screen1():
 
 def init_widgets_screen2():
     widgets_screen2 = init_widgets_list()
-    del widgets_screen2[16:17]
+    # Systray is at index 11, not 16. The old code deleted a TextBox separator
+    # and left Systray instantiated on every screen, which X11 does not support
+    # (one Systray per X11 session). That was causing error log spam and
+    # occasional stalls during startup and screen reconfigures.
+    del widgets_screen2[11:12]
     return widgets_screen2
 
 
