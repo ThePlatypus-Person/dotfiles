@@ -1,45 +1,54 @@
-TokyoNight Ports :: https://wixdaq.github.io/Tokyo-Night-Website/ports.html
 ChatGPT :: https://chatgpt.com/
-Gravesoft :: https://gravesoft.dev/
-Dictionary :: https://www.merriam-webster.com/
-NixDev :: https://nix.dev/tutorials/nix-language#paths
-/lit/ Wiki :: https://lit.trainroll.xyz/wiki/Recommended_Reading/sub
-OSSU :: https://github.com/ossu/computer-science
-shadcn.ui :: https://ui.shadcn.com/
-/sig/ MEGA Archive :: https://mega.nz/folder/v6AzSDSJ#9nFO3qrNGUEKs3M-uMFfuw
-Connected Papers :: https://www.connectedpapers.com/
-Bayesian Statistics :: https://www.youtube.com/watch?v=NIqeFYUhSzU
-Crafting Interpreters :: https://craftinginterpreters.com/a-map-of-the-territory.html
-Popping Song Playlist :: https://www.youtube.com/watch?v=7gGb218uDiU&list=RDEMCrEvD8ctsnjyaN56QUYWhA&index=27
-CSRankings :: https://csrankings.org/#/index?all&us
-CSStipendRankings :: https://csstipendrankings.org/
-InstallGentoo Wiki :: https://wiki.installgentoo.com/wiki/Main_Page
-Dist Sys Course :: https://www.distributedsystemscourse.com/
-DeathStarBench :: https://github.com/delimitrou/DeathStarBench/tree/master
-Tailwind Colors :: https://tailwindcolor.com/
-Ollama :: https://github.com/ollama/ollama
-LeafletJS :: https://leafletjs.com/reference.html#geojson
-Docker Deep Dive :: https://www.youtube.com/watch?v=Z7swPxOeRzM&list=PLOwc7JW6aCQFUrd5uOsLKIvWI_q-ghblc
 Perplexity :: https://www.perplexity.ai/
 Grok :: https://grok.com/
-Tony-btw :: https://www.youtube.com/@tony-btw/videos
-ChartJS :: https://www.chartjs.org/docs/latest/samples/other-charts/bubble.html
-Math Rock Playlist :: https://www.youtube.com/watch?v=zlG5txG63d0&list=RDL0U8q4ODBkg&index=16
+
+Massgrave :: https://massgrave.dev/
+NixDev :: https://nix.dev/tutorials/nix-language#paths
+OSSU :: https://github.com/ossu/computer-science
 NixOS Guide :: https://nixos-and-flakes.thiscute.world/introduction/
 Typst Documentation :: https://typst.app/docs/reference/symbols/sym/
+
+Dictionary :: https://www.merriam-webster.com/
+/lit/ Wiki :: https://lit.trainroll.xyz/wiki/Recommended_Reading/sub
+/sig/ MEGA Archive :: https://mega.nz/folder/v6AzSDSJ#9nFO3qrNGUEKs3M-uMFfuw
+InstallGentoo Wiki :: https://wiki.installgentoo.com/wiki/Main_Page
+
+Connected Papers :: https://www.connectedpapers.com/
+Crafting Interpreters :: https://craftinginterpreters.com/a-map-of-the-territory.html
+
+TokyoNight Ports :: https://wixdaq.github.io/Tokyo-Night-Website/ports.html
+shadcn.ui :: https://ui.shadcn.com/
+Tailwind Colors :: https://tailwindcolor.com/
+LeafletJS :: https://leafletjs.com/reference.html#geojson
+ChartJS :: https://www.chartjs.org/docs/latest/samples/other-charts/bubble.html
+
+Bayesian Statistics :: https://www.youtube.com/watch?v=NIqeFYUhSzU
+Popping Song Playlist :: https://www.youtube.com/watch?v=7gGb218uDiU&list=RDEMCrEvD8ctsnjyaN56QUYWhA&index=27
+Tony-btw :: https://www.youtube.com/@tony-btw/videos
+Docker Deep Dive :: https://www.youtube.com/watch?v=Z7swPxOeRzM&list=PLOwc7JW6aCQFUrd5uOsLKIvWI_q-ghblc
+Math Rock Playlist :: https://www.youtube.com/watch?v=zlG5txG63d0&list=RDL0U8q4ODBkg&index=16
+Doing Calculus (Spotify) :: https://open.spotify.com/playlist/5rXz8qxKWicQTFRpoxSKIr?si=70b73b4b2d5e4b9d&nd=1
+How a Computer Works (Video) :: https://www.youtube.com/watch?v=5f3NJnvnk7k
+Dist Sys YT :: https://www.youtube.com/watch?v=7VbL89mKK3M&list=PLOE1GTZ5ouRPbpTnrZ3Wqjamfwn_Q5Y9A
+
+CSRankings :: https://csrankings.org/#/index?all&us
+CSStipendRankings :: https://csstipendrankings.org/
+
+DeathStarBench :: https://github.com/delimitrou/DeathStarBench/tree/master
+Dist Sys Course :: https://www.distributedsystemscourse.com/
+Ollama :: https://github.com/ollama/ollama
+
 Reddit Socialism Starterpack :: https://www.reddit.com/r/socialism/wiki/index/starterpack/
-Excalidraw :: https://excalidraw.com/
 Desmos :: https://www.desmos.com/calculator
 Marcus Aurelius :: Meditations :: https://classics.mit.edu/Antoninus/meditations.html
 How not to Fail at Life :: https://imgur.com/a/FwSA5
-Doing Calculus (Spotify) :: https://open.spotify.com/playlist/5rXz8qxKWicQTFRpoxSKIr?si=70b73b4b2d5e4b9d&nd=1
-How a Computer Works (Video) :: https://www.youtube.com/watch?v=5f3NJnvnk7k
 Tailwind Cheat Sheet :: https://tailwindcomponents.com/cheatsheet/
 Overview of Mathematics (Book) :: https://www.amazon.com/dp/0486409163
 Docker Hub :: https://hub.docker.com/
-Dist Sys YT :: https://www.youtube.com/watch?v=7VbL89mKK3M&list=PLOE1GTZ5ouRPbpTnrZ3Wqjamfwn_Q5Y9A
 Jepsen :: https://jepsen.io/consistency/models
 
+Excalidraw :: https://excalidraw.com/
 Typst Grape Suite :: https://typst.app/universe/package/grape-suite
 Typst Graceful Genetics :: https://typst.app/universe/package/graceful-genetics
+Flamegraph :: https://www.speedscope.app/
 

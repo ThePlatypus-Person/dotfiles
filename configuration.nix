@@ -68,6 +68,18 @@
 	enable = true;
 	defaultEditor = true;
     };
+    # Enable Dynamic Linking
+    programs.nix-ld = {
+	enable = true;
+	libraries = with pkgs; [
+	    fuse3
+	];
+    };
+    environment.etc."fuse.conf".text = ''
+	# Managed by NixOS
+	user_allow_other
+    '';
+
     environment.etc."vimrc".text = ''
 	set number
 	set relativenumber

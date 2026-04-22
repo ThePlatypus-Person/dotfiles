@@ -60,6 +60,9 @@ pdf = [
   { run = "zathura \"$@\"", desc = "Zathura", block = false },
   { run = "xdg-open \"$@\"", desc = "System default" },
 ]
+image = [
+    { run = 'shotwell "$@"', desc = "shotwell" }
+]
 
 [open]
 rules = [
@@ -70,7 +73,7 @@ rules = [
 	{ mime = "application/x-subrip", use = [ "edit", "reveal" ] },
 	{ mime = "application/vnd.sqlite3", use = [ "edit", "reveal" ] },
 	# Image
-	{ mime = "image/*", use = [ "open", "reveal" ] },
+	{ mime = "image/*", use = [ "image", "reveal" ] },
 	# Media
 	{ mime = "{audio,video}/*", use = [ "play", "reveal" ] },
 	# PDF

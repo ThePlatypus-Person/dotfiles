@@ -64,6 +64,7 @@ in
 	shellAliases = {
 	    ll = "ls -alh";
 	    ".." = "cd ..";
+	    vim = "nvim";
 	    conf = "sudo vim /etc/nixos/configuration.nix";
 	    home = "vim /etc/nixos/home.nix";
 	    rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#t14-g2";
@@ -102,6 +103,9 @@ in
 		    ssh-add ~/.ssh/github-t14-g2
 		fi
 	    fi
+
+	    export PATH="/usr/local/bin:$PATH"
+	    export GRB_LICENSE_FILE="/home/mori/Scripts/gurobi.lic"
 	'';
     };
 
@@ -142,6 +146,7 @@ in
 	xfce.thunar
 	unclutter
 	dmenu
+	shotwell
 	nsxiv
 
 	betterlockscreen
@@ -181,8 +186,12 @@ in
 	tmux
 	onlyoffice-desktopeditors
 	(callPackage ./apps/sourcetrail.nix { })
+	gajim
+	gimp
+	spotify
 
 	openjdk21
+	maven
 	jetbrains.idea-community
 	sqlite
 
@@ -198,13 +207,15 @@ in
 	pkg-config
 
 	go
+	lua
 
 	ant
 	#openjdk21
 	#rustc
 	#cargo
-    ];
 
+	gurobi
+    ];
 
     programs.neovim = {
 	enable = true;
