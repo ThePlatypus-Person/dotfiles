@@ -9,7 +9,6 @@ let
 	dunst = "dunst";
 	kitty = "kitty";
 	nvim = "nvim";
-	picom = "picom";
 	qtile = "qtile";
 	zathura = "zathura";
 	rofi = "rofi";
@@ -139,7 +138,6 @@ in
 	rofi
 	dunst
 	feh
-	picom
 	cava
 	nitrogen
 	pfetch

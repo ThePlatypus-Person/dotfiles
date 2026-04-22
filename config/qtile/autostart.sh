@@ -2,7 +2,6 @@
 
 blueman-applet &
 nitrogen --restore &
-picom &
 dunst &
 udiskie &
 flameshot &

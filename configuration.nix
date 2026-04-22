@@ -36,13 +36,6 @@
 	};
     };
 
-    services.picom = {
-	enable = true;
-	settings.vsync = true;
-	fade = true;
-	fadeDelta = 5;
-    };
-
     services.libinput = {
 	enable = true;
 	touchpad = {
