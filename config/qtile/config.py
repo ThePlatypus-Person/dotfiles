@@ -1,5 +1,5 @@
 # Imports
-import os, sys, re, subprocess, socket, colors
+import os, sys, re, subprocess, colors
 from libqtile import bar, extension, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
 # from libqtile.log_utils import logger
@@ -55,25 +55,32 @@ keys = [
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
 
-    Key([mod], "Left", lazy.layout.left(), desc="Move focus to left"),
-    Key([mod], "Right", lazy.layout.right(), desc="Move focus to right"),
-    Key([mod], "Down", lazy.layout.down(), desc="Move focus down"),
-    Key([mod], "Up", lazy.layout.up(), desc="Move focus up"),
+    # Left/Right: cycle through tabs (windows) within the same column.
+    # Up/Down:    move focus between columns.
+    Key([mod], "Left", lazy.layout.previous(), desc="Focus previous window"),
+    Key([mod], "Right", lazy.layout.next(), desc="Focus next window"),
+    # Key([mod], "Left", lazy.layout.up(), desc="Previous tab in column"),
+    # Key([mod], "Right", lazy.layout.down(), desc="Next tab in column"),
+    # Key([mod], "Down", lazy.layout.right(), desc="Move focus right (next column)"),
+    # Key([mod], "Up", lazy.layout.left(), desc="Move focus left (prev column)"),
 
-    Key([mod, "shift"], "Left", lazy.layout.shuffle_left(), desc="Move window left"),
-    Key([mod, "shift"], "Right", lazy.layout.shuffle_right(), desc="Move window right"),
-    Key([mod, "shift"], "Down", lazy.layout.shuffle_up(), desc="Move window up"),
-    Key([mod, "shift"], "Up", lazy.layout.shuffle_down(), desc="Move window right"),
+    Key([mod, "shift"], "Up", lazy.layout.shuffle_up(), desc="Move window back"),
+    Key([mod, "shift"], "Down", lazy.layout.shuffle_down(), desc="Move window forward"),
+    # Key([mod, "shift"], "Left", lazy.layout.shuffle_up(), desc="Move window up in column"),
+    # Key([mod, "shift"], "Right", lazy.layout.shuffle_down(), desc="Move window down in column"),
+     Key([mod, "shift"], "Right", lazy.layout.shuffle_right(), desc="Move window right (next column)"),
+     Key([mod, "shift"], "Left", lazy.layout.shuffle_left(), desc="Move window left (prev column)"),
 
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
 
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window right"),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_up(), desc="Move window up"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_down(), desc="Move window down"),
+    # [mod, shift] + h/j/k/l are defined below with .when(layout=["treetab"])
+    # conditionals — the plain versions above were removed to avoid duplicate
+    # binding warnings from Qtile.
 
-    Key([mod, "control"], "h", lazy.layout.grow(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.shrink(), desc="Grow window to the right"),
+    Key([mod, "control"], "Left",  lazy.layout.grow_left(),  desc="Grow column left"),
+    Key([mod, "control"], "Right", lazy.layout.grow_right(), desc="Grow column right"),
+    Key([mod, "control"], "Up",    lazy.layout.grow_up(),    desc="Grow window up"),
+    Key([mod, "control"], "Down",  lazy.layout.grow_down(),  desc="Grow window down"),
 
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
     Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
@@ -96,6 +103,7 @@ keys = [
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "m", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod, "shift", "control"], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "m", lazy.spawn("sh -c ~/.config/qtile/scripts/dunst-toggle"), desc="Toggle notifications"),
 
     Key([mod, "shift"], "h",
         lazy.layout.shuffle_left(),
@@ -134,7 +142,6 @@ group_names = ["1", "2", "3", "4", "5", "6", "7", "8", ]
 # group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9",]
 group_labels = ["", "", "", "", "", "", "", "",]
 group_layouts = [
-    "monadtall",
     "monadtall",
     "monadtall",
     "monadtall",
@@ -206,11 +213,6 @@ widget_defaults = dict(
     background=colors[0]
 )
 
-# Search Widget
-def search() -> None:
-    qtile.cmd_spawn("rofi -show drun"),
-
-
 def run(cmd):
     """Run a shell command and return stripped output, or None."""
     try:
@@ -272,7 +274,6 @@ class NetworkStatusComponent(base.ThreadPoolText):
         # WiFi interfaces have a /sys/class/net/<iface>/wireless directory
         wireless_path = f"/sys/class/net/{iface}/wireless"
         try:
-            import os
             return "wifi" if os.path.isdir(wireless_path) else "ethernet"
         except Exception:
             return "unknown"
@@ -305,36 +306,18 @@ class NetworkStatusComponent(base.ThreadPoolText):
         }
 
 
-        '''
-        widget.Wlan(
-            interface="wlp3s0",  # Replace with your Wi-Fi interface name
-            ethernet_interface = "enp5s0",
-            format="  {essid}",  # Show Wi-Fi name and signal strength
-            disconnected="󰖪 ",
-            foreground = colors[6],
-            background = colors[10],
-            padding = 0,
-        ),
-
-        widget.TextBox(
-            text = '󰿟',
-            font = "JetBrainsMono Nerd Font Bold",
-            foreground = colors[0],
-            background = colors[10],
-            padding = 0,
-            fontsize = 57,
-        ),
-
-        widget.Net(
-            interface="enp5s0",  # Replace with your Ethernet interface name (or leave empty for default)
-            format="{interface}: {down}↓ {up}↑",  # Show download and upload speeds
-            foreground = colors[6],
-            background = colors[10],
-            decorations=[
-                PowerLineDecoration(fill="000000", angle=90),
-            ],
-        ),
-        '''
+        # Old widget.Wlan / widget.Net block — kept for reference.
+        # Replaced by NetworkStatusComponent above.
+        #
+        # widget.Wlan(
+        #     interface="wlp3s0",
+        #     format="  {essid}",
+        #     disconnected="󰖪 ",
+        # ),
+        # widget.Net(
+        #     interface="enp5s0",
+        #     format="{interface}: {down}↓ {up}↑",
+        # ),
 
 
 # Widgets
@@ -634,38 +617,6 @@ if __name__ in ["config", "__main__"]:
     widgets_screen2 = init_widgets_screen2()
 
 
-def window_to_prev_group(qtile):
-    if qtile.currentWindow is not None:
-        i = qtile.groups.index(qtile.currentGroup)
-        qtile.currentWindow.togroup(qtile.groups[i - 1].name)
-
-
-def window_to_next_group(qtile):
-    if qtile.currentWindow is not None:
-        i = qtile.groups.index(qtile.currentGroup)
-        qtile.currentWindow.togroup(qtile.groups[i + 1].name)
-
-
-def window_to_previous_screen(qtile):
-    i = qtile.screens.index(qtile.current_screen)
-    if i != 0:
-        group = qtile.screens[i - 1].group.name
-        qtile.current_window.togroup(group)
-
-
-def window_to_next_screen(qtile):
-    i = qtile.screens.index(qtile.current_screen)
-    if i + 1 != len(qtile.screens):
-        group = qtile.screens[i + 1].group.name
-        qtile.current_window.togroup(group)
-
-
-def switch_screens(qtile):
-    i = qtile.screens.index(qtile.current_screen)
-    group = qtile.screens[i - 1].group
-    qtile.current_screen.set_group(group)
-
-
 # Mouse
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
@@ -695,10 +646,8 @@ floating_layout = layout.Floating(
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
+# auto_minimize, wl_* — Wayland-only, no-op on X11
 auto_minimize = True
-wl_input_rules = None
-wl_xcursor_theme = None
-wl_xcursor_size = 24
 
 
 # Autostart Scripts

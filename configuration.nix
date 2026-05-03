@@ -38,9 +38,12 @@
 
     services.picom = {
 	enable = true;
-	settings.vsync = true;
 	fade = true;
 	fadeDelta = 5;
+	settings = {
+	    vsync = true;
+	    configFile = "/home/mori/dotfiles/config/picom/picom.conf";
+	};
     };
 
     services.libinput = {
@@ -116,6 +119,7 @@
 	# Audio Controls
 	pavucontrol
 	pamixer
+	easyeffects
 
 	file
 	gvfs

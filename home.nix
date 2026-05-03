@@ -1,7 +1,10 @@
 { inputs, config, pkgs, ... }:
 
 let 
-    unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+    unstable = import inputs.nixpkgs-unstable {
+	system = pkgs.system;
+	config.allowUnfree = true;
+    };
     configDir = "${config.home.homeDirectory}/dotfiles/config";
     create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
     # Standard .config/directory
@@ -15,7 +18,7 @@ let
 	rofi = "rofi";
 	"starship.toml" = "starship.toml";
 	yazi = "yazi";
-	"BetterDiscord/themes" = "BetterDiscord/themes";
+	/*"BetterDiscord/themes" = "BetterDiscord/themes";*/
 	tmux = "tmux";
 	bookmarks = "bookmarks";
     };
@@ -135,6 +138,7 @@ in
 	blueman
 	htop
 	btop
+	unstable.claude-code
 
 	rofi
 	dunst
@@ -216,6 +220,12 @@ in
 
 	gurobi
     ];
+
+    home.file.".claude/config.json".text = builtins.toJSON {
+	interpreter = {
+	    preamble = "Use caveman mode. Strip filler words. Save tokens.";
+	};
+    };
 
     programs.neovim = {
 	enable = true;

@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
 
-wifi_list=$(nmcli -t -f SSID,SIGNAL dev wifi list)
+# Trigger a background rescan immediately so results are fresher next time,
+# but don't wait for it — this is fire-and-forget.
+nmcli device wifi rescan &>/dev/null &
+
+# Use --rescan no to return cached results instantly instead of waiting 2-5s
+# for a fresh scan to complete before opening rofi.
+wifi_list=$(nmcli -t -f SSID,SIGNAL dev wifi list --rescan no)
 
 formatted_list=""
 while IFS=':' read -r ssid signal; do
+    # Skip empty SSIDs (hidden networks)
+    [ -z "$ssid" ] && continue
+
     if ((signal < 30)); then
         signal_symbol="󰤟"
     elif ((signal < 60)); then
@@ -11,13 +20,19 @@ while IFS=':' read -r ssid signal; do
     elif ((signal < 90)); then
         signal_symbol="󰤥"
     else
-        signal_symbol="󰤨" 
+        signal_symbol="󰤨"
     fi
     formatted_list+=" $signal_symbol $ssid\n"
 done <<< "$wifi_list"
 
-chosen=$(echo -e "$formatted_list" | rofi -theme ~/.config/rofi/wifi.rasi -dmenu -p "Wi-Fi networks:" | awk -F ' ' '{print $2}' | xargs)
+# Extract the SSID by stripping the leading icon and space, rather than
+# splitting on whitespace — this handles SSIDs that contain spaces correctly.
+chosen=$(echo -e "$formatted_list" \
+    | rofi -theme ~/.config/rofi/wifi.rasi -dmenu -p "Wi-Fi networks:" \
+    | sed 's/^ [^ ]* //')
 
 if [ -n "$chosen" ]; then
+    # Connect in a terminal so you can see password prompts / errors.
+    # If the network is already known, nmcli connects silently.
     nmcli device wifi connect "$chosen"
 fi

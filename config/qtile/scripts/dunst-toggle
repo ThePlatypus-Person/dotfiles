@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+ 
+# Toggle dunst notifications on/off.
+#
+# Order of operations is intentional:
+#   Muting:   notify first (dunst is still running), then pause.
+#   Unmuting: unpause first, then notify (dunst is now running again).
+#
+# dunstctl is-paused returns the string "true" or "false".
+ 
+if [ "$(dunstctl is-paused)" = "false" ]; then
+    # Currently active → mute
+    notify-send -u low -t 1500 -i dialog-information "Notifications" "Muted 󰂛"
+    sleep 0.1   # give dunst time to display the notification before pausing
+    dunstctl set-paused true
+else
+    # Currently paused → unmute
+    dunstctl set-paused false
+    notify-send -u low -t 1500 -i dialog-information "Notifications" "Unmuted 󰂚"
+fi
