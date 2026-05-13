@@ -7,6 +7,7 @@ NixDev :: https://nix.dev/tutorials/nix-language#paths
 OSSU :: https://github.com/ossu/computer-science
 NixOS Guide :: https://nixos-and-flakes.thiscute.world/introduction/
 Typst Documentation :: https://typst.app/docs/reference/symbols/sym/
+NixOS Packages :: https://search.nixos.org/packages
 
 Dictionary :: https://www.merriam-webster.com/
 /lit/ Wiki :: https://lit.trainroll.xyz/wiki/Recommended_Reading/sub

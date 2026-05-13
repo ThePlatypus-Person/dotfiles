@@ -35,7 +35,7 @@ edit = [
 	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },
 ]
 open = [
-	{ run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
+	{ run = 'xdg-open "$1"', orphan = true, desc = "Open", for = "linux" },
 	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
 	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
 	{ run = 'termux-open "$1"',             desc = "Open", for = "android" },
@@ -57,11 +57,14 @@ play = [
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
 pdf = [
-  { run = "zathura \"$@\"", desc = "Zathura", block = false },
-  { run = "xdg-open \"$@\"", desc = "System default" },
+  { run = "zathura \"$@\"", desc = "Zathura", orphan = true },
+  { run = "xdg-open \"$@\"", desc = "System default", orphan = true },
 ]
 image = [
-    { run = 'shotwell "$@"', desc = "shotwell" }
+    { run = 'shotwell "$@"', desc = "shotwell", orphan = true }
+]
+office = [
+    { run = 'onlyoffice-desktopeditors "$@"', desc = "ONLYOFFICE", orphan = true, for = "unix" },
 ]
 
 [open]
@@ -83,6 +86,12 @@ rules = [
 	# JSON
 	{ mime = "application/{json,ndjson}", use = [ "edit", "reveal" ] },
 	{ mime = "*/javascript", use = [ "edit", "reveal" ] },
+	# Office documents - by MIME
+	{ mime = "application/vnd.openxmlformats-officedocument.*", use = ["office", "reveal"] },
+	{ mime = "application/vnd.ms-{excel,powerpoint,word}", use = ["office", "reveal"] },
+	{ mime = "application/msword", use = ["office", "reveal"] },
+	{ mime = "application/vnd.ms-excel", use = ["office", "reveal"] },
+	{ mime = "application/vnd.ms-powerpoint", use = ["office", "reveal"] },
 	# Empty file
 	{ mime = "inode/empty", use = [ "edit", "reveal" ] },
 	# Fallback

@@ -139,6 +139,7 @@ in
 	htop
 	btop
 	unstable.claude-code
+	obs-studio
 
 	rofi
 	dunst
@@ -194,6 +195,7 @@ in
 	gimp
 	spotify
 
+	typescript
 	openjdk21
 	maven
 	jetbrains.idea-community
