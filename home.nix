@@ -16,6 +16,7 @@ let
 	qtile = "qtile";
 	zathura = "zathura";
 	rofi = "rofi";
+	typst = "typst/templates";
 	"starship.toml" = "starship.toml";
 	yazi = "yazi";
 	/*"BetterDiscord/themes" = "BetterDiscord/themes";*/
@@ -24,40 +25,66 @@ let
     };
 in
 {
+    # Identity
     home.username = "mori";
     home.homeDirectory = "/home/mori";
     home.stateVersion = "25.05";
 
-    programs.git = {
-	enable = true;
-	userName = "ThePlatypus-Person";
-	userEmail = "Ornithorhynchus0920@protonmail.com";
 
-	delta = {
-	    enable = true;
-	    options = {
-		navigate = true;
-		light = false;
-		side-by-side = true;
-	    };
-	};
+    # Packages
+    home.packages = with pkgs; [
+	# System & Desktop
+	playerctl brightnessctl libnotify flameshot
+	networkmanagerapplet arandr udiskie polkit_gnome
+	blueman betterlockscreen dconf gtk-engine-murrine
 
-	aliases = {
-	    cm = "commit";
-	    st = "status";
-	    lg = "log --graph --oneline --all";
-	};
+	# Window Manager & X11
+	rofi dunst feh picom cava nitrogen fastfetch
+	xfce.thunar unclutter dmenu shotwell nsxiv
 
-	extraConfig = {
-	    init.defaultBranch = "main";
-	    pull.rebase = true;
-	    credential.helper = "${
-		pkgs.git.override { withLibsecret = true; }
-	    }/bin/git-credential-libsecret";
-	    push = { autoSetupRemote = true; };
-	};
-    };
-    programs.starship.enable = true;
+	# Terminal & Shell Tools
+	htop btop tmux fd ripgrep fzf zoxide jq
+
+	# Yazi Dependencies
+	ffmpegthumbnailer unar poppler
+
+	# Neovim Dependencies
+	nil nixpkgs-fmt nodejs gcc xsel
+
+	# Typst
+	unstable.tinymist unstable.typst zathura zathuraPkgs.zathura_pdf_mupdf
+	noto-fonts noto-fonts-cjk-sans liberation_ttf dejavu_fonts
+	(pkgs.google-fonts.override { fonts = [ "Inter" "Lato" "Roboto" ]; })
+
+	# Development
+	cargo rustc go lua typescript openjdk21 sqlite pkg-config
+	ant maven jetbrains.idea-community unstable.claude-code bruno
+    
+	## Python
+	(python312.withPackages (ps: with ps; [
+	    python-dotenv packaging requests numpy
+	    matplotlib pandas gurobipy
+	]))
+
+	# Containers & Infra
+	fuse3 docker_28 docker-compose
+
+	# Media
+	obs-studio gimp spotify
+
+	# Communication
+	slack discord-ptb gajim zoom-us keepassxc
+
+	# Office & Productivity
+	onlyoffice-desktopeditors
+
+	# Custom & Unfree
+	gurobi
+	(callPackage ./apps/sourcetrail.nix { })
+    ];
+
+
+    # Shell & Terminal
     programs.zsh = {
 	enable = true;
 	enableCompletion = true;
@@ -99,7 +126,10 @@ in
 	    zle -N yazi-launcher
 	    bindkey '^o' yazi-launcher
 
+	    export PATH="/etc/profiles/per-user/mori/bin:$PATH"
 	    export SSH_AUTH_SOCK="/run/user/$(id -u)/ssh-agent"
+	    expost TYPST_FONT_PATHS="$HOME/.nix-profile/share/fonts"
+	    export TYPST_PACKAGE_PATH="$HOME/dotfiles/config/typst/templates"
 
 	    if [ -S "$SSH_AUTH_SOCK" ]; then
 		if ! ssh-add -l | grep -q "ThePlatypus-Person"; then
@@ -108,147 +138,63 @@ in
 	    fi
 
 	    export PATH="/usr/local/bin:$PATH"
-	    export GRB_LICENSE_FILE="/home/mori/Scripts/gurobi.lic"
+	    export GRB_LICENSE_FILE="$HOME/Scripts/gurobi.lic"
+	    unset SSH_ASKPASS
+	    unset GIT_ASKPASS
 	'';
     };
+    programs.starship.enable = true;
 
-    xdg.configFile = builtins.mapAttrs (name: subpath: {
-	source = create_symlink "${configDir}/${subpath}";
-	recursive = true;
-    }) configs;
 
-    xdg.desktopEntries.sourcetrail = {
-	name = "Sourcetrail";
-	genericName = "Source Code Explorer";
-	exec = "Sourcetrail";
-	icon = "sourcetrail";
-	terminal = false;
-	categories = [ "Development" ];
-    };
-
-    home.packages = with pkgs; [
-	playerctl
-	brightnessctl
-	libnotify
-	flameshot
-	networkmanagerapplet
-	arandr
-	udiskie
-	polkit_gnome
-	blueman
-	htop
-	btop
-	unstable.claude-code
-	obs-studio
-
-	rofi
-	dunst
-	feh
-	picom
-	cava
-	nitrogen
-	pfetch
-	xfce.thunar
-	unclutter
-	dmenu
-	shotwell
-	nsxiv
-
-	betterlockscreen
-	dconf
-	gtk-engine-murrine
-
-	# Yazi
-	ffmpegthumbnailer
-	unar
-	jq
-	poppler
-	fd
-	ripgrep
-	fzf
-	zoxide
-
-	# Neovim
-	ripgrep
-	cargo
-	rustc
-	nil
-	nixpkgs-fmt
-	nodejs
-	gcc
-	xsel
-	unstable.tinymist
-
-	zathura
-	zathuraPkgs.zathura_pdf_mupdf
-
-	slack
-	discord-ptb
-	keepassxc
-	zoom-us
-	typst
-	bruno
-	tmux
-	onlyoffice-desktopeditors
-	(callPackage ./apps/sourcetrail.nix { })
-	gajim
-	gimp
-	spotify
-
-	typescript
-	openjdk21
-	maven
-	jetbrains.idea-community
-	sqlite
-
-	# For XDN
-	(python312.withPackages (ps: with ps; [
-				 python-dotenv
-				 packaging
-	]))
-
-	fuse3
-	docker_28
-	docker-compose
-	pkg-config
-
-	go
-	lua
-
-	ant
-	#openjdk21
-	#rustc
-	#cargo
-
-	gurobi
-    ];
-
-    home.file.".claude/config.json".text = builtins.toJSON {
-	interpreter = {
-	    preamble = "Use caveman mode. Strip filler words. Save tokens.";
-	};
-    };
-
+    # Editor
     programs.neovim = {
 	enable = true;
 	defaultEditor = true;
     };
 
+
+    # File Manager
     programs.yazi = {
 	enable = true;
 	enableZshIntegration = true;
 	enableBashIntegration = true;
     };
 
-    services.udiskie = {
+
+
+    # Git
+    programs.git = {
 	enable = true;
-	settings = {
-	    program_options = {
-		file_manager = "${pkgs.xfce.thunar}/bin/thunar";
+	userName = "ThePlatypus-Person";
+	userEmail = "Ornithorhynchus0920@protonmail.com";
+
+	delta = {
+	    enable = true;
+	    options = {
+		navigate = true;
+		light = false;
+		side-by-side = true;
 	    };
+	};
+
+	aliases = {
+	    cm = "commit";
+	    st = "status";
+	    lg = "log --graph --oneline --all";
+	};
+
+	extraConfig = {
+	    init.defaultBranch = "main";
+	    pull.rebase = true;
+	    credential.helper = "${
+		pkgs.git.override { withLibsecret = true; }
+	    }/bin/git-credential-libsecret";
+	    push = { autoSetupRemote = true; };
 	};
     };
 
+
+    # Browser
     programs.librewolf = {
 	enable = true;
 	# Enable WebGL, cookies and history
@@ -266,24 +212,57 @@ in
     };
 
 
-    home.pointerCursor = {
-	name = "Capitaine Cursors (Gruvbox) - White";
-	size = 32;
-	package = pkgs.capitaine-cursors-themed;
-	gtk.enable = true;
-	x11.enable = true;
+    # Media
+    programs.mpv = {
+	enable = true;
+
+	package = pkgs.mpv-unwrapped.wrapper {
+	    scripts = with pkgs.mpvScripts; [
+		uosc sponsorblock
+	    ];
+
+	    mpv = pkgs.mpv-unwrapped;
+	};
+
+	config = {
+	    profile = "high-quality";
+	    ytdl-format="bv*[height<720]+ba/b";
+	    cache-default = 4000000;
+	};
     };
 
-    xresources.properties = {
-	"Xft.dpi" = 110;
-	"Xft.autohint" = 0;
-	"Xft.lcdfilter" = "lcddefault";
-	"Xft.hintstyle" = "hintfull";
-	"Xft.hinting" = 1;
-	"Xft.antialias" = 1;
-	"Xft.rgba" = "rgb";
+
+    # Services
+    services.udiskie = {
+	enable = true;
+	settings = {
+	    program_options = {
+		file_manager = "${pkgs.xfce.thunar}/bin/thunar";
+	    };
+	};
     };
 
+    # XDG * Dotfile Symlinks
+    xdg.configFile = builtins.mapAttrs (name: subpath: {
+	source = create_symlink "${configDir}/${subpath}";
+	recursive = true;
+    }) configs;
+    xdg.desktopEntries.sourcetrail = {
+	name = "Sourcetrail";
+	genericName = "Source Code Explorer";
+	exec = "Sourcetrail";
+	icon = "sourcetrail";
+	terminal = false;
+	categories = [ "Development" ];
+    };
+    home.file.".claude/config.json".text = builtins.toJSON {
+	interpreter = {
+	    preamble = "Use caveman mode. Strip filler words. Save tokens.";
+	};
+    };
+
+
+    # Theming
     gtk = {
 	enable = true;
 	font = {
@@ -307,28 +286,20 @@ in
 	    extraConfig.gtk-application-prefer-dark-theme = true;
 	};
     };
-
-
-    programs.mpv = {
-	enable = true;
-
-	package = (
-	    pkgs.mpv-unwrapped.wrapper {
-		scripts = with pkgs.mpvScripts; [
-		    uosc
-		    sponsorblock
-		];
-
-		mpv = pkgs.mpv-unwrapped.override {
-		    waylandSupport = true;
-		};
-	    }
-	);
-
-	config = {
-	    profile = "high-quality";
-	    ytdl-format="bv*[height<720]+ba/b";
-	    cache-default = 4000000;
-	};
+    home.pointerCursor = {
+	name = "Capitaine Cursors (Gruvbox) - White";
+	size = 32;
+	package = pkgs.capitaine-cursors-themed;
+	gtk.enable = true;
+	x11.enable = true;
+    };
+    xresources.properties = {
+	"Xft.dpi" = 110;
+	"Xft.autohint" = 0;
+	"Xft.lcdfilter" = "lcddefault";
+	"Xft.hintstyle" = "hintfull";
+	"Xft.hinting" = 1;
+	"Xft.antialias" = 1;
+	"Xft.rgba" = "rgb";
     };
 }

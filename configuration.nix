@@ -12,12 +12,36 @@
 
     networking.hostName = "t14-g2";
     networking.networkmanager.enable = true;
+    networking.hosts = {
+	"pc40.cloudlab.umass.edu" = [ "restkv.xdnapp.com" ];
+    };
+
 
     time.timeZone = "Asia/Jakarta";
     # Hibernation
     boot.resumeDevice = "/dev/disk/by-uuid/1bdc033c-a4e8-44f6-b4e4-b37af9739a91";
     # Allow betterlockscreen to verify password
     security.pam.services.i3lock.enable = true;
+
+    security.sudo.extraRules = [
+    {
+	users = [ "mori" ];
+	commands = [
+	{
+	    command = "/run/current-system/sw/bin/chmod";
+	    options = [ "NOPASSWD" ];
+	}
+	{
+	    command = "/home/mori/Work/xdn-pb-test/fuselogv2";
+	    options = [ "NOPASSWD" "SETENV" ];
+	}
+	{
+	    command = "/run/wrappers/bin/fusermount3";
+	    options = [ "NOPASSWD" ];
+	}
+	];
+    }
+    ];
 
     # Graphics & Desktop
     services.displayManager.ly.enable = true;
@@ -31,7 +55,7 @@
 	    enable = true;
 	    extraPackages = python3Packages: with python3Packages; [
 		qtile-extras
-		    psutil
+		psutil
 	    ];
 	};
     };
@@ -159,7 +183,7 @@
     # User
     users.users.mori = {
 	isNormalUser = true;
-	extraGroups = [ "wheel" "networkmanager" ];
+	extraGroups = [ "wheel" "networkmanager" "docker" ];
 	shell = pkgs.zsh;
 	packages = with pkgs; [
 	    tree
@@ -168,10 +192,8 @@
 
 
     # Docker
-    virtualisation.docker.enable = true;
-    virtualisation.docker.rootless = {
+    virtualisation.docker = {
 	enable = true;
-	setSocketVariable = true;
     };
 
 

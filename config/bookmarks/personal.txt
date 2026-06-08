@@ -2,11 +2,21 @@ ChatGPT :: https://chatgpt.com/
 Perplexity :: https://www.perplexity.ai/
 Grok :: https://grok.com/
 
+Dutch Gov Colors :: https://www.rijkshuisstijl.nl/publiek/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=10815
+Dutch Gov Font 1 :: https://www.rijkshuisstijl.nl/publiek/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=6745
+Dutch Gov Font 2 :: https://www.rijkshuisstijl.nl/publiek/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=10860
+Dutch Gov Surface Division :: https://www.rijkshuisstijl.nl/publiek/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=6746
+Dutch Gov Logo :: https://www.rijkshuisstijl.nl/publiek/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=6775
+Dutch Gov Layout 1 :: https://www.rijkshuisstijl.nl/publiek/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=10863
+Dutch Gov Layout 2 :: https://www.rijkshuisstijl.nl/publiek/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=10861
+Dutch Gov Tables & Graphs :: https://www.rijkshuisstijl.nl/publiek/modules/product/DigitalStyleGuide/default/index.aspx?ItemId=10862
+
 Massgrave :: https://massgrave.dev/
 NixDev :: https://nix.dev/tutorials/nix-language#paths
 OSSU :: https://github.com/ossu/computer-science
 NixOS Guide :: https://nixos-and-flakes.thiscute.world/introduction/
 Typst Documentation :: https://typst.app/docs/reference/symbols/sym/
+Typst Intro Blog :: https://blog.jreyesr.com/posts/typst/
 NixOS Packages :: https://search.nixos.org/packages
 
 Dictionary :: https://www.merriam-webster.com/
