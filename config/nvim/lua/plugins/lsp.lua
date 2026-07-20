@@ -137,11 +137,16 @@ return {
                 end,
             },
         })
-	vim.lsp.config("tinymist", {
-	    cmd = { "tinymist" }, -- system / nix binary
-	    filetypes = { "typst" },
-	})
-	vim.lsp.enable("tinymist")
+        vim.lsp.config("tinymist", {
+            cmd = { "tinymist" },
+            filetypes = { "typst" },
+            settings = {
+                typstExtraArgs = {
+                    "--package-path", vim.fn.expand("~/.config/typst/packages")
+                },
+            },
+        })
+        vim.lsp.enable("tinymist")
 
         local cmp = require('cmp')
 

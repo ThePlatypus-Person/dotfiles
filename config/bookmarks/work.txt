@@ -10,3 +10,5 @@ G-ACE PhD Prep Drive :: https://drive.google.com/drive/folders/12DXhVuiFdNj_NjXS
 2025 Budget :: https://docs.google.com/spreadsheets/d/1M-88ojozqZWdjJLLn3dkv51EnPfJ746sEPN5ormIX8A/edit?gid=0#gid=0
 Whatsapp :: https://web.whatsapp.com/
 MS Teams :: https://teams.microsoft.com/v2/
+
+Catala Cont :: https://book.catala-lang.org/en/1-0-getting_started.html

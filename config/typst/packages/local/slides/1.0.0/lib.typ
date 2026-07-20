@@ -244,6 +244,7 @@
 
   show heading.where(level: 2): pagebreak(weak: true)
   show heading: set text(1.1em, fill: title-color)
+  show heading.where(level: 3): set heading(numbering: none)
 
   show terms.item: it => {
     stack(

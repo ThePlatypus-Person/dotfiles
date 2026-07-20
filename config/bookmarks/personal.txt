@@ -62,4 +62,3 @@ Excalidraw :: https://excalidraw.com/
 Typst Grape Suite :: https://typst.app/universe/package/grape-suite
 Typst Graceful Genetics :: https://typst.app/universe/package/graceful-genetics
 Flamegraph :: https://www.speedscope.app/
-

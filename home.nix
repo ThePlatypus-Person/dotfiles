@@ -16,7 +16,7 @@ let
 	qtile = "qtile";
 	zathura = "zathura";
 	rofi = "rofi";
-	typst = "typst/templates";
+	typst = "typst";
 	"starship.toml" = "starship.toml";
 	yazi = "yazi";
 	/*"BetterDiscord/themes" = "BetterDiscord/themes";*/
@@ -30,6 +30,10 @@ in
     home.homeDirectory = "/home/mori";
     home.stateVersion = "25.05";
 
+    # Pin pre-26.05 defaults explicitly (stateVersion already keeps these,
+    # this just silences the "legacy default" evaluation warnings)
+    gtk.gtk4.theme = config.gtk.theme;
+
 
     # Packages
     home.packages = with pkgs; [
@@ -40,7 +44,7 @@ in
 
 	# Window Manager & X11
 	rofi dunst feh picom cava nitrogen fastfetch
-	xfce.thunar unclutter dmenu shotwell nsxiv
+	thunar unclutter dmenu shotwell nsxiv
 
 	# Terminal & Shell Tools
 	htop btop tmux fd ripgrep fzf zoxide jq
@@ -57,29 +61,34 @@ in
 	(pkgs.google-fonts.override { fonts = [ "Inter" "Lato" "Roboto" ]; })
 
 	# Development
-	cargo rustc go lua typescript openjdk21 sqlite pkg-config
-	ant maven jetbrains.idea-community unstable.claude-code bruno
+	cargo rustc go lua typescript jdk sqlite pkg-config tailwindcss
+	ant maven jetbrains.idea-oss unstable.claude-code bruno
+	meson ninja cmake iconv udev android-tools
     
 	## Python
 	(python312.withPackages (ps: with ps; [
 	    python-dotenv packaging requests numpy
-	    matplotlib pandas gurobipy
+	    matplotlib pandas gurobipy pyyaml
+	    # For Discord
+	    discordpy
 	]))
 
 	# Containers & Infra
-	fuse3 docker_28 docker-compose
+	unstable.fuse3 unstable.fuse3.dev docker docker-compose
 
 	# Media
 	obs-studio gimp spotify
 
 	# Communication
-	slack discord-ptb gajim zoom-us keepassxc
+	slack /*discord-ptb /*gajim*/ zoom-us keepassxc
 
 	# Office & Productivity
-	onlyoffice-desktopeditors
+	onlyoffice-desktopeditors pandoc haskellPackages.pandoc-sidenote 
+	papers
 
 	# Custom & Unfree
 	gurobi
+	obsidian
 	(callPackage ./apps/sourcetrail.nix { })
     ];
 
@@ -123,13 +132,28 @@ in
 		zle reset-prompt
 	    }
 
+	    function tw() {
+		local src="$1"
+		if [ -z "$src" ]; then
+		    echo "Usage: tw <path/to/file.typ>"
+			return 1
+		fi
+
+		# Strip leading src/ if present, replace extension
+		local rel="''${src#src/}"
+		local out="output/''${rel%.typ}.pdf"
+
+		# Create output directory
+		mkdir -p "$(dirname "$out")"
+
+		local pkg_path="$HOME/.config/typst/packages"
+		typst compile --package-path "$pkg_path" "$src" "$out" && zathura "$out" &
+		typst watch --package-path "$pkg_path" "$src" "$out"
+	    }
+	    compdef '_files -g "*.typ"' tw
+
 	    zle -N yazi-launcher
 	    bindkey '^o' yazi-launcher
-
-	    export PATH="/etc/profiles/per-user/mori/bin:$PATH"
-	    export SSH_AUTH_SOCK="/run/user/$(id -u)/ssh-agent"
-	    expost TYPST_FONT_PATHS="$HOME/.nix-profile/share/fonts"
-	    export TYPST_PACKAGE_PATH="$HOME/dotfiles/config/typst/templates"
 
 	    if [ -S "$SSH_AUTH_SOCK" ]; then
 		if ! ssh-add -l | grep -q "ThePlatypus-Person"; then
@@ -141,6 +165,10 @@ in
 	    export GRB_LICENSE_FILE="$HOME/Scripts/gurobi.lic"
 	    unset SSH_ASKPASS
 	    unset GIT_ASKPASS
+
+	    export PATH="/etc/profiles/per-user/mori/bin:$PATH"
+	    export SSH_AUTH_SOCK="/run/user/$(id -u)/ssh-agent"
+	    export TYPST_FONT_PATHS="$HOME/.nix-profile/share/fonts"
 	'';
     };
     programs.starship.enable = true;
@@ -150,6 +178,9 @@ in
     programs.neovim = {
 	enable = true;
 	defaultEditor = true;
+	withRuby = false;
+	withPython3 = true;
+	sideloadInitLua = true;
     };
 
 
@@ -158,6 +189,7 @@ in
 	enable = true;
 	enableZshIntegration = true;
 	enableBashIntegration = true;
+	shellWrapperName = "yy";
     };
 
 
@@ -165,31 +197,35 @@ in
     # Git
     programs.git = {
 	enable = true;
-	userName = "ThePlatypus-Person";
-	userEmail = "Ornithorhynchus0920@protonmail.com";
 
-	delta = {
-	    enable = true;
-	    options = {
-		navigate = true;
-		light = false;
-		side-by-side = true;
+	settings = {
+	    user = {
+		name = "ThePlatypus-Person";
+		email = "Ornithorhynchus0920@protonmail.com";
 	    };
-	};
 
-	aliases = {
-	    cm = "commit";
-	    st = "status";
-	    lg = "log --graph --oneline --all";
-	};
+	    alias = {
+		cm = "commit";
+		st = "status";
+		lg = "log --graph --oneline --all";
+	    };
 
-	extraConfig = {
 	    init.defaultBranch = "main";
 	    pull.rebase = true;
 	    credential.helper = "${
 		pkgs.git.override { withLibsecret = true; }
 	    }/bin/git-credential-libsecret";
 	    push = { autoSetupRemote = true; };
+	};
+    };
+
+    programs.delta = {
+	enable = true;
+	enableGitIntegration = true;
+	options = {
+	    navigate = true;
+	    light = false;
+	    side-by-side = true;
 	};
     };
 
@@ -216,12 +252,10 @@ in
     programs.mpv = {
 	enable = true;
 
-	package = pkgs.mpv-unwrapped.wrapper {
+	package = pkgs.mpv.override {
 	    scripts = with pkgs.mpvScripts; [
 		uosc sponsorblock
 	    ];
-
-	    mpv = pkgs.mpv-unwrapped;
 	};
 
 	config = {
@@ -237,7 +271,7 @@ in
 	enable = true;
 	settings = {
 	    program_options = {
-		file_manager = "${pkgs.xfce.thunar}/bin/thunar";
+		file_manager = "${pkgs.thunar}/bin/thunar";
 	    };
 	};
     };
@@ -292,6 +326,10 @@ in
 	package = pkgs.capitaine-cursors-themed;
 	gtk.enable = true;
 	x11.enable = true;
+    };
+    home.sessionVariables = {
+	QT_QPA_PLATFORMTHEME = "gtk3";
+	PKG_CONFIG_PATH = "/etc/profiles/per-user/mori/lib/pkgconfig";
     };
     xresources.properties = {
 	"Xft.dpi" = 110;

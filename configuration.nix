@@ -13,7 +13,7 @@
     networking.hostName = "t14-g2";
     networking.networkmanager.enable = true;
     networking.hosts = {
-	"pc40.cloudlab.umass.edu" = [ "restkv.xdnapp.com" ];
+	"127.0.0.1" = [ "restkv.xdnapp.com" ];
     };
 
 
@@ -64,11 +64,14 @@
 	enable = true;
 	fade = true;
 	fadeDelta = 5;
-	settings = {
-	    vsync = true;
-	    configFile = "/home/mori/dotfiles/config/picom/picom.conf";
-	};
+	vSync = true;
     };
+
+    # The NixOS picom module always generates its own config from `settings` and
+    # ignores any "configFile" key inside it — there's no built-in passthrough.
+    # Since we manage picom.conf ourselves in dotfiles, point the unit at it directly.
+    systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce
+	"${lib.getExe config.services.picom.package} --config /home/mori/dotfiles/config/picom/picom.conf";
 
     services.libinput = {
 	enable = true;
@@ -81,14 +84,21 @@
 
 
     # Audio
+    services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
 	enable = true;
 	alsa.enable = true;
 	alsa.support32Bit = true;
 	pulse.enable = true;
+	jack.enable = true;
+	extraConfig.pipewire."92-low-latency" = {
+	    "context.properties" = {
+		"default.clock.rate" = 48000;
+		"default.clock.quantum" = 1024;
+	    };
+	};
     };
-
 
     # Global Vim Config
     programs.vim = {
@@ -133,6 +143,11 @@
 
     programs.ssh.startAgent = true;
     programs.zsh.enable = true;
+    # New in 26.05: gcr-ssh-agent now defaults to enabled system-wide (previously
+    # gated behind GNOME/MATE/Cinnamon/etc). It conflicts with programs.ssh.startAgent
+    # since only one SSH agent can own the socket — we don't use GNOME Keyring, so disable it.
+    services.gnome.gcr-ssh-agent.enable = false;
+
     environment.systemPackages = with pkgs; [
 	vim
 	wget
@@ -173,23 +188,18 @@
 	nerd-fonts.jetbrains-mono
 	nerd-fonts.symbols-only
 	font-awesome_6
-    ];
-
-    fonts.fonts = with pkgs; [
 	corefonts
     ];
-
 
     # User
     users.users.mori = {
 	isNormalUser = true;
-	extraGroups = [ "wheel" "networkmanager" "docker" ];
+	extraGroups = [ "wheel" "networkmanager" "docker" "audio" "adbusers" ];
 	shell = pkgs.zsh;
 	packages = with pkgs; [
 	    tree
 	];
     };
-
 
     # Docker
     virtualisation.docker = {

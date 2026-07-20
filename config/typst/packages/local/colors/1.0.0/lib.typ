@@ -1,4 +1,4 @@
-#let dutchGovColors = (
+#let dutch = (
   ribbonBlue: (
     rgb("#154273"),
     rgb("#4f7196"),
