@@ -29,7 +29,7 @@ powerline_config = {
 @lazy.layout.function
 def add_treetab_section(layout):
     prompt = qtile.widgets_map["prompt"]
-    prompt.start_input("Section name: ", layout.cmd_add_section)
+    prompt.start_input("Section name: ", layout.add_section)
 
 
 @lazy.function
@@ -228,7 +228,7 @@ def run(cmd):
 # of InLoopPollText + socket.connect("8.8.8.8", 53) with a 2s timeout was
 # the primary cause of intermittent group-switch latency: every 5s the
 # entire event loop would stall for up to 2000ms waiting on the network.
-class NetworkStatusComponent(base.ThreadPoolText):
+class NetworkStatusComponent(base.BackgroundPoll):
     defaults = [
         ("update_interval", 5, "Update interval in seconds"),
     ]
@@ -372,7 +372,7 @@ def init_widgets_list():
             background=colors[10],
             mode="both",
             icon_first=True,
-            custom_icon_paths=[f"/home/zakky/.config/qtile/assets/layout/"],
+            custom_icon_paths=[f"{os.path.expanduser('~')}/.config/qtile/assets/layout/"],
             scale=0.4,
             padding=5,
         ),
@@ -449,7 +449,7 @@ def init_widgets_list():
             full_char="󰁹",                # 󰁹 battery (full)
             empty_char="󰁺",               # 󰁺 battery alert
             unknown_char="󰂑",             # 󰂑 battery unknown
-            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
+            mouse_callbacks={'Button1': lambda: qtile.spawn(terminal + ' -e btop')},
             format='{char}  {percent:2.0%}',
         ),
 
@@ -467,7 +467,7 @@ def init_widgets_list():
             foreground=colors[6],
             padding=3, 
             update_interval=2,
-            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
+            mouse_callbacks={'Button1': lambda: qtile.spawn(terminal + ' -e btop')},
             format='  {load_percent}%',
         ),
 
@@ -487,7 +487,7 @@ def init_widgets_list():
             warn_color="f7768e",
             foreground=colors[6],
             background=colors[10],
-            format=" {uf}{m}",  # used free / size
+            format=" {uf:.1f}{m}",  # used free / size
         ),
 
         widget.TextBox(
@@ -504,7 +504,7 @@ def init_widgets_list():
             foreground=colors[6],
             padding=3,
             update_interval=3,
-            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
+            mouse_callbacks={'Button1': lambda: qtile.spawn(terminal + ' -e btop')},
             format="{NotAvailable: .0f} {mm}B",
             fmt=' {}',
         ),
@@ -531,7 +531,7 @@ def init_widgets_list():
             volume_up_command="pamixer -i 5",
             volume_down_command="pamixer -d 5",
             mute_command="pamixer -t",
-            mouse_callbacks={'Button1': lambda: qtile.cmd_spawn('pavucontrol')},
+            mouse_callbacks={'Button1': lambda: qtile.spawn('pavucontrol')},
             fmt='  {}',
         ),
 

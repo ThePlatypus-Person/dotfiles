@@ -5,6 +5,9 @@ let
 	system = pkgs.system;
 	config.allowUnfree = true;
     };
+    nvimPin = import inputs.nvim-pin {
+	system = pkgs.system;
+    };
     configDir = "${config.home.homeDirectory}/dotfiles/config";
     create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
     # Standard .config/directory
@@ -63,7 +66,7 @@ in
 	# Development
 	cargo rustc go lua typescript jdk sqlite pkg-config tailwindcss
 	ant maven jetbrains.idea-oss unstable.claude-code bruno
-	meson ninja cmake iconv udev android-tools
+	meson ninja cmake iconv udev android-tools mosh async-profiler
     
 	## Python
 	(python312.withPackages (ps: with ps; [
@@ -74,13 +77,13 @@ in
 	]))
 
 	# Containers & Infra
-	unstable.fuse3 unstable.fuse3.dev docker docker-compose
+	unstable.fuse3 unstable.fuse3.dev docker docker-compose k6
 
 	# Media
 	obs-studio gimp spotify
 
 	# Communication
-	slack /*discord-ptb /*gajim*/ zoom-us keepassxc
+	slack discord-ptb /*gajim*/ zoom-us keepassxc
 
 	# Office & Productivity
 	onlyoffice-desktopeditors pandoc haskellPackages.pandoc-sidenote 
@@ -181,6 +184,7 @@ in
 	withRuby = false;
 	withPython3 = true;
 	sideloadInitLua = true;
+	package = nvimPin.neovim-unwrapped;
     };
 
 
@@ -330,6 +334,7 @@ in
     home.sessionVariables = {
 	QT_QPA_PLATFORMTHEME = "gtk3";
 	PKG_CONFIG_PATH = "/etc/profiles/per-user/mori/lib/pkgconfig";
+	AP_LIB = "${pkgs.async-profiler}/lib/libasyncProfiler.so";
     };
     xresources.properties = {
 	"Xft.dpi" = 110;

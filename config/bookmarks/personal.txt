@@ -51,7 +51,7 @@ Ollama :: https://github.com/ollama/ollama
 
 Reddit Socialism Starterpack :: https://www.reddit.com/r/socialism/wiki/index/starterpack/
 Desmos :: https://www.desmos.com/calculator
-Marcus Aurelius :: Meditations :: https://classics.mit.edu/Antoninus/meditations.html
+Marcus Aurelius - Meditations :: https://classics.mit.edu/Antoninus/meditations.html
 How not to Fail at Life :: https://imgur.com/a/FwSA5
 Tailwind Cheat Sheet :: https://tailwindcomponents.com/cheatsheet/
 Overview of Mathematics (Book) :: https://www.amazon.com/dp/0486409163
@@ -62,3 +62,14 @@ Excalidraw :: https://excalidraw.com/
 Typst Grape Suite :: https://typst.app/universe/package/grape-suite
 Typst Graceful Genetics :: https://typst.app/universe/package/graceful-genetics
 Flamegraph :: https://www.speedscope.app/
+
+Popping :: https://www.bilibili.com/video/BV1Sy4y1a73m
+
+AI Slop Text Generation :: https://www.youtube.com/watch?v=uJblcC4lKYw
+Piracy :: https://fmhy.net
+
+OSTEP: Three Easy Pieces :: https://pages.cs.wisc.edu/~remzi/OSTEP/
+AI Agent Auto Research :: https://github.com/karpathy/autoresearch
+DS Practical Guy :: https://www.youtube.com/@jonhoo
+1 Billion Row Java Challenge :: https://www.youtube.com/watch?v=pHZF-zJ3Bpg
+Async-profile guide :: https://www.youtube.com/watch?v=u7-S-Hn-7Do

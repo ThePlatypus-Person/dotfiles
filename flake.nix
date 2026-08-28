@@ -8,6 +8,10 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 	nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+	# Pinned to the last neovim-unwrapped release before the markdown/conceal_lines
+	# treesitter crash introduced in 0.12.0 (still open upstream as of Jul 2026,
+	# see neovim/neovim#39032). Remove this once that's fixed.
+	nvim-pin.url = "github:NixOS/nixpkgs/832efc09b4caf6b4569fbf9dc01bec3082a00611";
     };
 
     outputs = { self, nixpkgs, home-manager, ... }@inputs: {

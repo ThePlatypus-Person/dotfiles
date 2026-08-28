@@ -10,10 +10,16 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
-    networking.hostName = "t14-g2";
-    networking.networkmanager.enable = true;
-    networking.hosts = {
-	"127.0.0.1" = [ "restkv.xdnapp.com" ];
+    networking = {
+	hostName = "t14-g2";
+	networkmanager = {
+	    enable = true;
+	    dhcp = "internal";
+	};
+
+	hosts = {
+	    "127.0.0.1" = [ "restkv.xdnapp.com" ];
+	};
     };
 
 
@@ -131,6 +137,11 @@
 	set backspace=indent,eol,start
     '';
 
+    environment.etc."NetworkManager/conf.d/no-scan-rand-mac.conf".text = ''
+	[device]
+	wifi.scan-rand-mac-address=no
+    '';
+
 
     # Packages
     nixpkgs.config.allowUnfree = true;
@@ -204,6 +215,9 @@
     # Docker
     virtualisation.docker = {
 	enable = true;
+	daemon.settings = {
+	    userland-proxy = true;
+	};
     };
 
 
