@@ -216,7 +216,7 @@
     virtualisation.docker = {
 	enable = true;
 	daemon.settings = {
-	    userland-proxy = true;
+	    userland-proxy = false;
 	};
     };
 

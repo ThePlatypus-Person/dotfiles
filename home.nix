@@ -10,6 +10,7 @@ let
     };
     configDir = "${config.home.homeDirectory}/dotfiles/config";
     create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
+    asyncProfilerFull = pkgs.callPackage ./apps/async-profiler.nix { };
     # Standard .config/directory
     configs = {
 	dunst = "dunst";
@@ -66,7 +67,7 @@ in
 	# Development
 	cargo rustc go lua typescript jdk sqlite pkg-config tailwindcss
 	ant maven jetbrains.idea-oss unstable.claude-code bruno
-	meson ninja cmake iconv udev android-tools mosh async-profiler
+	meson ninja cmake iconv udev android-tools mosh vegeta
     
 	## Python
 	(python312.withPackages (ps: with ps; [
@@ -93,6 +94,7 @@ in
 	gurobi
 	obsidian
 	(callPackage ./apps/sourcetrail.nix { })
+	asyncProfilerFull
     ];
 
 
@@ -334,7 +336,7 @@ in
     home.sessionVariables = {
 	QT_QPA_PLATFORMTHEME = "gtk3";
 	PKG_CONFIG_PATH = "/etc/profiles/per-user/mori/lib/pkgconfig";
-	AP_LIB = "${pkgs.async-profiler}/lib/libasyncProfiler.so";
+	AP_LIB = "${asyncProfilerFull}/lib/libasyncProfiler.so";
     };
     xresources.properties = {
 	"Xft.dpi" = 110;
