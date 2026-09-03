@@ -1,26 +1,16 @@
-{ lib
-    , stdenv
-	, fetchFromGitHub
-	, cmake
-	, ninja
-	, pkg-config
-# Qt
-	, qt6
-# Logic/Data
-	, boost188
-	, sqlite
-	, tinyxml
-# LLVM/Clang 20
-	, llvmPackages_20
-# Java
-	, maven
-	, jdk
-# Testing
-	, catch2_3
-	, gtest
-	, icu
-# Wrapper Utilities
-	, makeWrapper
+{ lib, stdenv, fetchFromGitHub, cmake, ninja, pkg-config,
+    # Qt
+    qt6,
+    # Logic/Data
+    boost188, sqlite, tinyxml,
+    # LLVM/Clang 20
+    llvmPackages_20,
+    # Java
+    maven, jdk,
+    # Testing
+    catch2_3, gtest, icu,
+    # Wrapper Utilities
+    makeWrapper
 }:
 
 let

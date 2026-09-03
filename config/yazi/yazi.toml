@@ -74,7 +74,7 @@ rules = [
 	{ mime = "text/*", use = [ "edit", "reveal" ] },
 	# Text
 	{ mime = "text/*", use = [ "edit", "reveal" ] },
-	{ mime = "application/x-subrip", use = [ "edit", "reveal" ] },
+	{ mime = "application/{x-subrip,subrip}", use = [ "edit", "reveal" ] },
 	{ mime = "application/vnd.sqlite3", use = [ "edit", "reveal" ] },
 	# Image
 	{ mime = "image/*", use = [ "image", "reveal" ] },
@@ -112,6 +112,10 @@ suppress_preload = false
 # frozen copy - this section previously duplicated the stock defaults verbatim,
 # which meant every yazi upgrade could silently desync from the real internal
 # schema (this is what caused the stuck 'mime' fetcher).
+
+prepend_previewers = [
+	{ mime = "application/{x-subrip,subrip}", run = "code" },
+]
 
 [input]
 cursor_blink = false
