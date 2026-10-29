@@ -12,11 +12,12 @@
 	# treesitter crash introduced in 0.12.0 (still open upstream as of Jul 2026,
 	# see neovim/neovim#39032). Remove this once that's fixed.
 	nvim-pin.url = "github:NixOS/nixpkgs/832efc09b4caf6b4569fbf9dc01bec3082a00611";
+	nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     };
 
-    outputs = { self, nixpkgs, home-manager, ... }@inputs:
-	let
-	mkHost = { hostName, user }: nixpkgs.lib.nixosSystem {
+    outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }@inputs:
+    let
+	mkHost = { hostName, user, extraModules ? [ ] }: nixpkgs.lib.nixosSystem {
 	    system = "x86_64-linux";
 	    modules = [
 		./modules/common.nix
@@ -32,10 +33,15 @@
 			backupFileExtension = "backup";
 		    };
 		}
-	    ];
+	    ] ++ extraModules;
 	};
     in
     {
 	nixosConfigurations.t14-g2 = mkHost { hostName = "t14-g2"; user = "mori"; };
+	nixosConfigurations.x270 = mkHost {
+	    hostName = "x270";
+	    user = "jun";
+	    extraModules = [ nixos-hardware.nixosModules.lenovo-thinkpad-x270 ];
+	};
     };
 }
