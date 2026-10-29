@@ -1,53 +1,19 @@
 { config, lib, pkgs, ... }:
 
 {
-    imports =
-	[
-	./hardware-configuration.nix
-	];
-
     # Boot & System
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
-    networking = {
-	hostName = "t14-g2";
-	networkmanager = {
-	    enable = true;
-	    dhcp = "internal";
-	};
-
-	hosts = {
-	    "127.0.0.1" = [ "restkv.xdnapp.com" ];
-	};
+    networking.networkmanager = {
+	enable = true;
+	dhcp = "internal";
     };
 
-
     time.timeZone = "Asia/Jakarta";
-    # Hibernation
-    boot.resumeDevice = "/dev/disk/by-uuid/1bdc033c-a4e8-44f6-b4e4-b37af9739a91";
+
     # Allow betterlockscreen to verify password
     security.pam.services.i3lock.enable = true;
-
-    security.sudo.extraRules = [
-    {
-	users = [ "mori" ];
-	commands = [
-	{
-	    command = "/run/current-system/sw/bin/chmod";
-	    options = [ "NOPASSWD" ];
-	}
-	{
-	    command = "/home/mori/Work/xdn-pb-test/fuselogv2";
-	    options = [ "NOPASSWD" "SETENV" ];
-	}
-	{
-	    command = "/run/wrappers/bin/fusermount3";
-	    options = [ "NOPASSWD" ];
-	}
-	];
-    }
-    ];
 
     # Graphics & Desktop
     services.displayManager.ly.enable = true;
@@ -111,17 +77,6 @@
 	enable = true;
 	defaultEditor = true;
     };
-    # Enable Dynamic Linking
-    programs.nix-ld = {
-	enable = true;
-	libraries = with pkgs; [
-	    fuse3
-	];
-    };
-    environment.etc."fuse.conf".text = ''
-	# Managed by NixOS
-	user_allow_other
-    '';
 
     environment.etc."vimrc".text = ''
 	set number
@@ -129,7 +84,7 @@
 	syntax on
 	filetype plugin indent on
 	set expandtab
-	set shiftwidth=4
+	set shiftwidth = 4
 	set softtabstop = 4
 	set tabstop = 4
 	set smartindent
@@ -141,7 +96,6 @@
 	[device]
 	wifi.scan-rand-mac-address=no
     '';
-
 
     # Packages
     nixpkgs.config.allowUnfree = true;
@@ -202,26 +156,7 @@
 	corefonts
     ];
 
-    # User
-    users.users.mori = {
-	isNormalUser = true;
-	extraGroups = [ "wheel" "networkmanager" "docker" "audio" "adbusers" ];
-	shell = pkgs.zsh;
-	packages = with pkgs; [
-	    tree
-	];
-    };
-
-    # Docker
-    virtualisation.docker = {
-	enable = true;
-	daemon.settings = {
-	    userland-proxy = false;
-	};
-    };
-
 
     # Nix Settings
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
-    system.stateVersion = "25.05";
 }
