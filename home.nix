@@ -23,9 +23,9 @@ let
 	typst = "typst";
 	"starship.toml" = "starship.toml";
 	yazi = "yazi";
-	/*"BetterDiscord/themes" = "BetterDiscord/themes";*/
 	tmux = "tmux";
 	bookmarks = "bookmarks";
+	rmpc = "rmpc";
     };
 in
 {
@@ -51,7 +51,7 @@ in
 	thunar unclutter dmenu shotwell nsxiv
 
 	# Terminal & Shell Tools
-	htop btop tmux fd ripgrep fzf zoxide jq
+	htop btop tmux fd ripgrep fzf zoxide jq asciinema asciinema-agg
 
 	# Yazi Dependencies
 	ffmpegthumbnailer unar poppler
@@ -65,7 +65,7 @@ in
 	(pkgs.google-fonts.override { fonts = [ "Inter" "Lato" "Roboto" ]; })
 
 	# Development
-	cargo rustc go lua typescript jdk sqlite pkg-config tailwindcss
+	unstable.cargo unstable.rustc go lua typescript jdk sqlite pkg-config tailwindcss
 	ant maven jetbrains.idea-oss unstable.claude-code bruno
 	meson ninja cmake iconv udev android-tools mosh vegeta
     
@@ -73,25 +73,22 @@ in
 	(python312.withPackages (ps: with ps; [
 	    python-dotenv packaging requests numpy
 	    matplotlib pandas gurobipy pyyaml
-	    # For Discord
-	    discordpy
 	]))
 
 	# Containers & Infra
 	unstable.fuse3 unstable.fuse3.dev docker docker-compose k6
 
 	# Media
-	obs-studio gimp spotify
+	obs-studio gimp ffmpeg qbittorrent rmpc
 
 	# Communication
-	slack discord-ptb /*gajim*/ zoom-us keepassxc
+	slack zoom-us keepassxc 
 
 	# Office & Productivity
 	onlyoffice-desktopeditors pandoc haskellPackages.pandoc-sidenote 
-	papers
+	papers texliveFull /* unstable.mdbook */
 
 	# Custom & Unfree
-	gurobi
 	obsidian
 	(callPackage ./apps/sourcetrail.nix { })
 	asyncProfilerFull
@@ -159,6 +156,7 @@ in
 
 	    zle -N yazi-launcher
 	    bindkey '^o' yazi-launcher
+	    bindkey -s '^k' 'rmpc\n'
 
 	    if [ -S "$SSH_AUTH_SOCK" ]; then
 		if ! ssh-add -l | grep -q "ThePlatypus-Person"; then
@@ -167,6 +165,7 @@ in
 	    fi
 
 	    export PATH="/usr/local/bin:$PATH"
+	    export PATH="$HOME/.cargo/bin:$PATH"
 	    export GRB_LICENSE_FILE="$HOME/Scripts/gurobi.lic"
 	    unset SSH_ASKPASS
 	    unset GIT_ASKPASS
@@ -273,6 +272,18 @@ in
 
 
     # Services
+    services.mpd = {
+	enable = true;
+	musicDirectory = "${config.home.homeDirectory}/Music";
+	extraConfig = ''
+	    audio_output {
+		type "pipewire"
+		name "PipeWire"
+	    }
+	'';
+    };
+    services.mpdris2.enable = true;
+
     services.udiskie = {
 	enable = true;
 	settings = {

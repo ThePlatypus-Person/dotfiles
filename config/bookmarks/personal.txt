@@ -73,3 +73,20 @@ AI Agent Auto Research :: https://github.com/karpathy/autoresearch
 DS Practical Guy :: https://www.youtube.com/@jonhoo
 1 Billion Row Java Challenge :: https://www.youtube.com/watch?v=pHZF-zJ3Bpg
 Async-profile guide :: https://www.youtube.com/watch?v=u7-S-Hn-7Do
+Ram Alagappan - Dist Sys Gap :: https://www.youtube.com/watch?v=YBVBPaY-ItI
+
+Different Filesystems Explained :: https://www.youtube.com/watch?v=qdS8rxVYFJk
+Curated list of resources on testing distributed systems :: https://asatarin.github.io/testing-distributed-systems/
+
+Software Should Work :: https://softwareshould.work/
+Graduate School: Key To Success :: https://www.youtube.com/watch?v=fqPSnjewkuA
+
+Zig cont :: https://pedropark99.github.io/zig-book/Chapters/01-zig-weird.html
+Ziglings cont :: https://codeberg.org/ziglings/exercises/#ziglings
+
+IronBeetle cont :: https://www.youtube.com/watch?v=cjaJcEgm2RI&list=PL9eL-xg48OM3pnVqFSRyBFleHtBBw-nmZ&index=119
+TigerBettle Study 2 :: https://luma.com/q52i04r2
+Tigerbeetle Study 1 :: https://luma.com/423dud25
+Pawchive :: https://pawchive.cc/
+
+How to develop style :: https://www.youtube.com/watch?v=0ilmLux6mPg
