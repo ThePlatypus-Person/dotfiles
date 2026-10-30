@@ -27,8 +27,9 @@ done <<< "$wifi_list"
 
 # Extract the SSID by stripping the leading icon and space, rather than
 # splitting on whitespace — this handles SSIDs that contain spaces correctly.
+mapfile -t scale_args < <("$HOME/.config/qtile/scripts/rofi-args" wifi)
 chosen=$(echo -e "$formatted_list" \
-    | rofi -theme ~/.config/rofi/wifi.rasi -dmenu -p "Wi-Fi networks:" \
+    | rofi -theme ~/.config/rofi/wifi.rasi -dmenu -p "Wi-Fi networks:" "${scale_args[@]}" \
     | sed 's/^ [^ ]* //')
 
 if [ -n "$chosen" ]; then

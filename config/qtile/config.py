@@ -1,5 +1,5 @@
 # Imports
-import os, sys, re, subprocess, colors
+import os, sys, re, subprocess, shlex, colors
 from libqtile import bar, extension, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
 # from libqtile.log_utils import logger
@@ -17,6 +17,39 @@ discord = "discord"
 music = "spotify"
 files = "thunar"
 nitrogen = "nitrogen"
+
+def get_scale():
+    try:
+        out = subprocess.check_output(
+            [os.path.expanduser("~/.config/qtile/scripts/ui-scale")], text=True
+        )
+        return float(out.strip())
+    except Exception:
+        return 1.0
+
+
+scale = get_scale()
+
+
+def px(n):
+    return max(1, round(n * scale))
+
+def rofi_args(menu):
+    try:
+        out = subprocess.check_output(
+            [os.path.expanduser("~/.config/qtile/scripts/rofi-args"), menu],
+            text=True,
+            env={**os.environ, "UI_SCALE": f"{scale:.2f}"},
+        )
+        return out.splitlines()
+    except Exception:
+        return []
+
+
+launcher = (
+    "rofi -show drun -theme ~/.config/rofi/launcher.rasi "
+    + " ".join(shlex.quote(a) for a in rofi_args("launcher"))
+).strip()
 
 powerline_config = {
     "decorations": [
@@ -208,8 +241,8 @@ layouts = [
 # Widget Defaults
 widget_defaults = dict(
     font="JetBrainsMono Nerd Font",
-    fontsize = 14,
-    padding = 3,
+    fontsize = px(14),
+    padding = px(3),
     background=colors[0]
 )
 
@@ -323,12 +356,12 @@ class NetworkStatusComponent(base.BackgroundPoll):
 # Widgets
 def init_widgets_list():
     widgets_list = [
-        widget.Spacer(length=7),
+        widget.Spacer(length=px(7)),
         widget.Image(
             filename="~/.config/qtile/assets/nix.png",
             background=colors[0],
-            margin_y=7,
-            margin_x=7,
+            margin_y=px(7),
+            margin_x=px(7),
             rounded=False,
         ),
 
@@ -338,15 +371,15 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=31,
+            fontsize=px(31),
         ),
 
         widget.GroupBox(
-            margin_y=2,
-            margin_x=7,
+            margin_y=px(2),
+            margin_x=px(7),
             padding_y=0,
-            padding_x=3,
-            borderwidth=3,
+            padding_x=px(3),
+            borderwidth=px(3),
             background=colors[10],
             active=colors[9],
             inactive=colors[0],
@@ -364,7 +397,7 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=58,
+            fontsize=px(58),
         ),
 
         widget.CurrentLayout(
@@ -374,7 +407,7 @@ def init_widgets_list():
             icon_first=True,
             custom_icon_paths=[f"{os.path.expanduser('~')}/.config/qtile/assets/layout/"],
             scale=0.4,
-            padding=5,
+            padding=px(5),
         ),
 
         widget.TextBox(
@@ -383,14 +416,14 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=40,
+            fontsize=px(40),
         ),
 
         widget.TextBox(
             text="  Search",
             background=colors[0],
             foreground=colors[7],
-            padding=10,
+            padding=px(10),
             mouse_callbacks={"Button1": lazy.spawn(launcher)},
         ),
 
@@ -400,13 +433,13 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=33,
+            fontsize=px(33),
         ),
 
         widget.WindowName(
             foreground=colors[6],
             background=colors[10],
-            padding=10,
+            padding=px(10),
             max_chars=65,
             format="{name}",
             empty_group_string="Desktop",
@@ -418,12 +451,12 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=33,
+            fontsize=px(33),
         ),
 
         widget.Systray(
-            icon_size=16,
-            padding=5,
+            icon_size=px(16),
+            padding=px(5),
         ),
 
         widget.TextBox(
@@ -432,7 +465,7 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=50,
+            fontsize=px(50),
         ),
 
         widget.Battery(
@@ -441,7 +474,7 @@ def init_widgets_list():
             charging_foreground=colors[4],   # green while plugged in
             low_foreground=colors[3],        # red when low & discharging
             low_percentage=0.15,             # threshold for "low"
-            padding=3, 
+            padding=px(3), 
             update_interval=5,
             show_short_text=False,           # always use {char} + percent
             charge_char="󰂄",              # 󰂄 bolt
@@ -459,13 +492,13 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=57,
+            fontsize=px(57),
         ),
 
         widget.CPU(
             background=colors[10],
             foreground=colors[6],
-            padding=3, 
+            padding=px(3), 
             update_interval=2,
             mouse_callbacks={'Button1': lambda: qtile.spawn(terminal + ' -e btop')},
             format='  {load_percent}%',
@@ -477,7 +510,7 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=57,
+            fontsize=px(57),
         ),
 
         widget.DF(
@@ -496,13 +529,13 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=57,
+            fontsize=px(57),
         ),
 
         widget.Memory(
             background=colors[10],
             foreground=colors[6],
-            padding=3,
+            padding=px(3),
             update_interval=3,
             mouse_callbacks={'Button1': lambda: qtile.spawn(terminal + ' -e btop')},
             format="{NotAvailable: .0f} {mm}B",
@@ -515,7 +548,7 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=57,
+            fontsize=px(57),
         ),
 
         # Was widget.PulseVolume — crashed in asyncio with
@@ -525,7 +558,7 @@ def init_widgets_list():
         widget.Volume(
             background=colors[10],
             foreground=colors[6],
-            padding=3,
+            padding=px(3),
             update_interval=2,
             get_volume_command="pamixer --get-volume-human",
             volume_up_command="pamixer -i 5",
@@ -541,13 +574,13 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=57,
+            fontsize=px(57),
         ),
 
         NetworkStatusComponent(
             background=colors[10],
             foreground=colors[6],
-            padding=3,
+            padding=px(3),
             mouse_callbacks={"Button1": lazy.spawn("sh -c ~/.config/rofi/scripts/wifi")},
         ),
 
@@ -557,13 +590,13 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=57,
+            fontsize=px(57),
         ),
 
         widget.Clock(
             background=colors[10],
             foreground=colors[6],
-            padding=3,
+            padding=px(3),
             format="  %d %b %Y",
         ),
 
@@ -573,13 +606,13 @@ def init_widgets_list():
             foreground=colors[0],
             background=colors[10],
             padding=0,
-            fontsize=50,
+            fontsize=px(50),
         ),
 
         widget.Clock(
             background=colors[0],
             foreground=colors[7],
-            padding=3,
+            padding=px(3),
             format="󰥔  %R ",
         ),
 
@@ -588,10 +621,9 @@ def init_widgets_list():
 
 
 def init_screens():
-    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), margin=[0, 20, 5, 20], size=35)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), margin=[0, 20, 5, 20], size=35)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), margin=[0, 20, 5, 20], size=35))]
-
+    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), margin=[0, px(20), px(5), px(20)], size=px(35))),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), margin=[0, px(20), px(5), px(20)], size=px(35))),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), margin=[0, px(20), px(5), px(20)], size=px(35)))]
 
 # Widget Screen
 def init_widgets_screen1():

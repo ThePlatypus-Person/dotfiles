@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Prints rofi arguments for one menu, one per line.
+# Prints nothing on screens 1920 px wide or more, so the T14 commands stay unchanged.
+scale="${UI_SCALE:-$("$HOME/.config/qtile/scripts/ui-scale")}"
+[ "$scale" = "1.00" ] && exit 0
+
+p() { awk -v n="$1" -v s="$scale" 'BEGIN { v = int(n * s + 0.5); if (v < 1) v = 1; print v }'; }
+
+dpi=$(xrdb -query | awk '/^Xft.dpi:/ {print $2}')
+[ -n "$dpi" ] && printf '%s\n' -dpi "$dpi"
+font="JetBrains Mono Nerd Font $(p 11)"
+
+case "$1" in
+    launcher)
+	printf '%s\n' -theme-str "* { font: \"$font\"; } window { width: $(p 500)px; } inputbar { padding: $(p 80)px $(p 40)px; spacing: $(p 10)px; } listbox { padding: $(p 20)px; spacing: $(p 20)px; } textbox-prompt-colon { padding: $(p 12)px $(p 15)px; } entry { padding: $(p 12)px $(p 16)px; } listview { spacing: $(p 10)px; } element { padding: $(p 12)px; spacing: $(p 10)px; }"
+        ;;
+    bookmarks)
+	printf '%s\n' -theme-str "* { font: \"$font\"; } window { width: $(p 600)px; } mainbox { padding: $(p 40)px; spacing: $(p 10)px; } listview { spacing: $(p 5)px; } element { padding: $(p 8)px; spacing: $(p 8)px; }"
+        ;;
+    wifi)
+        printf '%s\n' -theme-str "window { width: 15%; x-offset: -$(p 250); y-offset: $(p 30); }"
+        ;;
+esac

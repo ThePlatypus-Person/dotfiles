@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Prints min(1, primary monitor width / 1920) with two decimals.
+# 1920 wide or more gives 1.00, so the T14 stays unchanged.
+width=$(xrandr --current --listmonitors | awk '/\*/ {split($3, a, "/"); print a[1]; exit}')
+awk -v w="${width:-0}" 'BEGIN { w += 0; s = (w == 0 || w >= 1920) ? 1 : w / 1920; printf "%.2f\n", s }'

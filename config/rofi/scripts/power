@@ -2,7 +2,8 @@
 
 uptime=$(uptime -p | sed -e 's/up //g')
 dir="~/.config/rofi/"
-rofi_command="rofi -theme $dir/power.rasi"
+mapfile -t scale_args < <("$HOME/.config/qtile/scripts/rofi-args" power)
+rofi_command=(rofi -theme "$dir/power.rasi" "${scale_args[@]}")
 
 # Options
 hibernate="⏾"
@@ -14,7 +15,7 @@ logout=""
 
 options="$lock\n$hibernate\n$reboot\n$suspend\n$shutdown"
 
-chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 0)"
+chosen="$(echo -e "$options" | "${rofi_command[@]}" -p "Uptime: $uptime" -dmenu -selected-row 0)"
 case $chosen in
     $shutdown)
         systemctl poweroff

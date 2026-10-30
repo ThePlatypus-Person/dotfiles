@@ -8,7 +8,8 @@ PERS_FILE="${PERS_FILE:-$HOME/.config/bookmarks/personal.txt}"
 WORK_FILE="${WORK_FILE:-$HOME/.config/bookmarks/work.txt}"
 
 # Rofi command
-ROFI="rofi -dmenu -i -theme ~/.config/rofi/bookmarks.rasi -p 'Bookmarks:'"
+mapfile -t SCALE_ARGS < <("$HOME/.config/qtile/scripts/rofi-args" bookmarks)
+ROFI=(rofi -dmenu -i -theme "$HOME/.config/rofi/bookmarks.rasi" -p 'Bookmarks:' "${SCALE_ARGS[@]}")
 
 # Browsers
 # Choose your browsers accordingly
@@ -54,7 +55,7 @@ emit() {
 choice="$({
     emit personal "$PERS_FILE"
     emit work     "$WORK_FILE"
-} | sort | eval "$ROFI" || true)"
+} | sort | "${ROFI[@]}" || true)"
 
 [ -n "$choice" ] || exit 0
 
