@@ -41,7 +41,7 @@ in
         gimp rmpc /* unstable.mdbook */
 
         # Communication
-        slack zoom-us
+        slack zoom-us vesktop
 
         # Office & Productivity
         pandoc haskellPackages.pandoc-sidenote
