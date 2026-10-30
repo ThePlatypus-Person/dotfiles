@@ -43,7 +43,7 @@
     # ignores any "configFile" key inside it — there's no built-in passthrough.
     # Since we manage picom.conf ourselves in dotfiles, point the unit at it directly.
     systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce
-	"${lib.getExe config.services.picom.package} --config /home/mori/dotfiles/config/picom/picom.conf";
+	"${lib.getExe config.services.picom.package} --config %h/dotfiles/config/picom/picom.conf";
 
     services.libinput = {
 	enable = true;
