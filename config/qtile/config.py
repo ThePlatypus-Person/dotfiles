@@ -253,6 +253,38 @@ def run(cmd):
     except subprocess.CalledProcessError:
         return None
 
+def battery_widgets():
+    """One Battery widget per BAT* in sysfs, so a hot-swap battery shows up too."""
+    base = "/sys/class/power_supply"
+    try:
+        names = sorted(n for n in os.listdir(base) if n.startswith("BAT"))
+    except OSError:
+        names = []
+    result = []
+    for i, name in enumerate(names):
+        if i > 0:
+            result.append(widget.TextBox(text=" ", background=colors[10], padding=0))
+        result.append(
+            widget.Battery(
+                battery=name,
+                background=colors[10],
+                foreground=colors[6],
+                charging_foreground=colors[4],
+                low_foreground=colors[3],
+                low_percentage=0.15,
+                padding=px(3),
+                update_interval=5,
+                show_short_text=False,
+                charge_char="󰂄",
+                discharge_char="󰁹",
+                full_char="󰁹",
+                empty_char="󰁺",
+                unknown_char="󰂑",
+                mouse_callbacks={'Button1': lambda: qtile.spawn(terminal + ' -e btop')},
+                format='{char}  {percent:2.0%}',
+            )
+        )
+    return result
 
 # Wifi/Ethernet Widget
 #
@@ -468,23 +500,8 @@ def init_widgets_list():
             fontsize=px(50),
         ),
 
-        widget.Battery(
-            background=colors[10],
-            foreground=colors[6],
-            charging_foreground=colors[4],   # green while plugged in
-            low_foreground=colors[3],        # red when low & discharging
-            low_percentage=0.15,             # threshold for "low"
-            padding=px(3), 
-            update_interval=5,
-            show_short_text=False,           # always use {char} + percent
-            charge_char="󰂄",              # 󰂄 bolt
-            discharge_char="󰁹",           # 󰁹 battery
-            full_char="󰁹",                # 󰁹 battery (full)
-            empty_char="󰁺",               # 󰁺 battery alert
-            unknown_char="󰂑",             # 󰂑 battery unknown
-            mouse_callbacks={'Button1': lambda: qtile.spawn(terminal + ' -e btop')},
-            format='{char}  {percent:2.0%}',
-        ),
+
+        *battery_widgets(),
 
         widget.TextBox(
             text='󰿟',
