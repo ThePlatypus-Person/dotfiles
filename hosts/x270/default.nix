@@ -8,7 +8,7 @@
         extraGroups = [ "wheel" "networkmanager" "audio" ];
         shell = pkgs.zsh;
         packages = with pkgs; [
-            tree discord-ptb spotify
+            tree
         ];
     };
 
