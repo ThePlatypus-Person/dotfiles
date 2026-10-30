@@ -487,8 +487,8 @@ def init_widgets_list():
         ),
 
         widget.Systray(
-            icon_size=px(16),
-            padding=px(5),
+            icon_size=px(20),
+            padding=px(0),
         ),
 
         widget.TextBox(
