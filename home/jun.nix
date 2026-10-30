@@ -1,5 +1,11 @@
-{ lib, pkgs, ... }:
+{ inputs, lib, pkgs, ... }:
 
+let
+    unstable = import inputs.nixpkgs-unstable {
+        system = pkgs.system;
+        config.allowUnfree = true;
+    };
+in
 {
     imports = [ ./common.nix ];
 
@@ -10,7 +16,7 @@
 
     # Jun-only packages
     home.packages = with pkgs; [
-	discord-ptb spotify
+	unstable.discord-ptb spotify
 
 	prismlauncher
     ];
